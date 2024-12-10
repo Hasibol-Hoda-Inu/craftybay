@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../application/app_colors.dart';
+import '../widgets/app_icon_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,18 +27,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const Spacer(),
-              SvgPicture.asset(AssetsPath.logoSvg, width: 120,),
-              const Spacer(),
-              const CircularProgressIndicator(color: AppColors.themeColor,),
-              const SizedBox(height: 20,),
-              const Text("Version: 1.0.0"),
+              Spacer(),
+              AppLogoWidget(),
+              Spacer(),
+              CircularProgressIndicator(color: AppColors.themeColor,),
+              SizedBox(height: 20,),
+              Text("Version: 1.0.0"),
             ],
           ),
         ),
@@ -45,3 +46,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+

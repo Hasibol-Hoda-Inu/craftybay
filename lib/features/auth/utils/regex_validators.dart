@@ -5,3 +5,9 @@ extension EmailValidator on String {
         .hasMatch(this);
   }
 }
+
+extension BangladeshiMobileValidator on String {
+  bool isValidBangladeshiMobile() {
+    return RegExp(r'(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$').hasMatch(this);
+  }
+}
