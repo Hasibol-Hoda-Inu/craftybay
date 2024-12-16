@@ -37,6 +37,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               Form(
                   key: _formKey,
                   child: Column(
+                    spacing: 24,
                     children: [
                       TextFormField(
                         controller: _firstNameTEController,
@@ -51,7 +52,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             hintText: 'First name'
                         ),
                       ),
-                      const SizedBox(height: 24,),
                       TextFormField(
                         controller: _lastNameTEController,
                         validator: (value){
@@ -65,7 +65,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             hintText: 'Last name'
                         ),
                       ),
-                      const SizedBox(height: 24,),
                       TextFormField(
                         controller: _mobileTEController,
                         validator: (value){
@@ -81,7 +80,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             hintText: 'Mobile'
                         ),
                       ),
-                      const SizedBox(height: 24,),
                       TextFormField(
                         controller: _cityTEController,
                         validator: (value){
@@ -95,7 +93,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             hintText: 'City'
                         ),
                       ),
-                      const SizedBox(height: 24,),
                       TextFormField(
                         controller: _addressTEController,
                         maxLines: 3,
