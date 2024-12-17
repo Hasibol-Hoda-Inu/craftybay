@@ -1,4 +1,5 @@
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/app_icon_widget.dart';
@@ -110,13 +111,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     ],)),
               const SizedBox(height: 24,),
               ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    _onTapNextScreen();
+                  },
                   child: const Text("Complete"))
             ],
           ),
         ),
       ),
     );
+  }
+  void _onTapNextScreen(){
+    Navigator.pushNamed(context, MainBottomNavScreen.name);
   }
   @override
   void dispose() {

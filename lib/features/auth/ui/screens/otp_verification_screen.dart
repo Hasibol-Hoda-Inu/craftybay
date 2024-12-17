@@ -1,6 +1,6 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/auth/ui/screens/complete_profile_screen.dart';
-import 'package:craftybay/features/auth/utils/timer_controller.dart';
+import 'package:craftybay/features/auth/controllers/timer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
