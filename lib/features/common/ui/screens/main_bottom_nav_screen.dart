@@ -13,6 +13,7 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+
   final List<Widget> _screens = const [
      HomeScreen(),
      HomeScreen(),
@@ -21,21 +22,24 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: GetBuilder<MainBottomNavController>(
-        builder: (controller) {
-          return NavigationBar(
-              selectedIndex: controller.selectedIndex,
-              onDestinationSelected: controller.changeIndex,
-              destinations: const [
-            NavigationDestination(icon: Icon(Icons.home_outlined), label: "Home"),
-            NavigationDestination(icon: Icon(Icons.category_outlined), label: "Categories"),
-            NavigationDestination(icon: Icon(Icons.add_shopping_cart), label: "Cart"),
-            NavigationDestination(icon: Icon(Icons.favorite_border), label: "Wishlist"),
-          ]);
-        }
-      ),
-
-    );
+    return GetBuilder<MainBottomNavController>(
+      builder: (controller) {
+        return Scaffold(
+            body: _screens[controller.selectedIndex],
+            bottomNavigationBar: NavigationBar(
+                selectedIndex: controller.selectedIndex,
+                onDestinationSelected: controller.changeIndex,
+                destinations: const [
+                  NavigationDestination(
+                      icon: Icon(Icons.home_outlined), label: "Home"),
+                  NavigationDestination(
+                      icon: Icon(Icons.category_outlined), label: "Categories"),
+                  NavigationDestination(
+                      icon: Icon(Icons.add_shopping_cart), label: "Cart"),
+                  NavigationDestination(
+                      icon: Icon(Icons.favorite_border), label: "Wishlist"),
+                ]),
+        );}
+        );
+      }
   }
-}

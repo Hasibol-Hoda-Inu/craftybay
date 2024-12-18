@@ -122,7 +122,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     );
   }
   void _onTapNextScreen(){
-    Navigator.pushNamed(context, MainBottomNavScreen.name);
+    Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (predicate)=>false);
   }
   @override
   void dispose() {
