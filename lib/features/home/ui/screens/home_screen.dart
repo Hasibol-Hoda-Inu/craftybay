@@ -1,8 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:craftybay/application/assets_path.dart';
+import 'package:craftybay/application/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../application/assets_path.dart';
+import '../../../common/ui/widgets/category_icon_widget.dart';
+import '../widgets/home_carousel_slider_widget.dart';
+import '../widgets/home_section_title.dart';
+import '../widgets/product_card_widget.dart';
 import '../widgets/search_box_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,35 +26,66 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            spacing: 16,
             children: [
               SearchBoxWidget(controller: sbController,),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 180.0,
-                  viewportFraction: 1,
+              const SizedBox(height: 16,),
+              const HomeCarouselSliderWidget(),
+              const SizedBox(height: 16,),
+              HomeSectionHeader(title: 'Category', onTap: (){},),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 12,
+                  children: _getCategoryList(),
                 ),
-                items: [1,2,3,4,5].map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                            borderRadius: BorderRadius.circular(5)
-                          ),
-                          alignment: Alignment.center,
-                          child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-                      );
-                    },
-                  );
-                }).toList(),
-              )
+              ),
+              const SizedBox(height: 16,),
+              HomeSectionHeader(title: 'Popular', onTap: (){},),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 12,
+                  children: _getProductCardList(),
+                ),
+              ),
+              const SizedBox(height: 16,),
+              HomeSectionHeader(title: 'Special', onTap: (){},),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 12,
+                  children: _getProductCardList(),
+                ),
+              ),
+              const SizedBox(height: 16,),
+              HomeSectionHeader(title: 'New', onTap: (){},),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 12,
+                  children: _getProductCardList(),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+  List<Widget> _getCategoryList(){
+    List<Widget> categoryList = [];
+    for(int i=0; i<10; i++){
+      categoryList.add(const CategoryIconWidget());
+    }
+    return categoryList;
+  }
+
+  List<Widget> _getProductCardList(){
+    List<Widget> productCardList = [];
+    for(int i=0; i<10; i++){
+      productCardList.add(const ProductCardWidget());
+    }
+    return productCardList;
   }
 
   AppBar _buildAppBar() {
@@ -70,5 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
+
+
+
 
 
