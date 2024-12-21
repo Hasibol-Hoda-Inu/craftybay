@@ -1,4 +1,8 @@
+import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
+import 'package:craftybay/features/review/ui/screens/create_review.dart';
+import 'package:craftybay/features/review/ui/screens/review_list.dart';
+import 'package:craftybay/features/wish_list/ui/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,9 +20,9 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
 
   final List<Widget> _screens = const [
      HomeScreen(),
-     HomeScreen(),
-     HomeScreen(),
-     HomeScreen(),
+     CategoryListScreen(),
+     ReviewList(),
+     WishlistScreen(),
   ];
   @override
   Widget build(BuildContext context) {

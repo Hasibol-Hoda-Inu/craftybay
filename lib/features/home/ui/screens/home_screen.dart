@@ -1,6 +1,9 @@
 import 'package:craftybay/application/app_colors.dart';
+import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
+import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../../../../application/assets_path.dart';
 import '../../../common/ui/widgets/category_icon_widget.dart';
@@ -31,7 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16,),
               const HomeCarouselSliderWidget(),
               const SizedBox(height: 16,),
-              HomeSectionHeader(title: 'Category', onTap: (){},),
+              HomeSectionHeader(title: 'Category', onTap: (){
+                Get.find<MainBottomNavController>().changeIndex(1);
+              },),
+              const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -41,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 16,),
               HomeSectionHeader(title: 'Popular', onTap: (){},),
+              const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -50,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 16,),
               HomeSectionHeader(title: 'Special', onTap: (){},),
+              const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -59,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 16,),
               HomeSectionHeader(title: 'New', onTap: (){},),
+              const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
