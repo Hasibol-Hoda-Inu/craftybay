@@ -1,12 +1,11 @@
-import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
-import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
-import 'package:craftybay/features/review/ui/screens/create_review.dart';
-import 'package:craftybay/features/review/ui/screens/review_list.dart';
-import 'package:craftybay/features/wish_list/ui/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../category/ui/screens/category_list_screen.dart';
 import '../../../home/ui/screens/home_screen.dart';
+import '../../../review/ui/screens/review_list.dart';
+import '../../../wish_list/ui/screens/wishlist_screen.dart';
+import '../controllers/main_bottom_nav_controller.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   static const String name = "MainBottomNavScreen";

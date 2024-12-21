@@ -1,5 +1,3 @@
-import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

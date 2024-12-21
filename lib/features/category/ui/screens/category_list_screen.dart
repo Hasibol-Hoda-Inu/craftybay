@@ -1,7 +1,6 @@
-import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/category_icon_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 class CategoryListScreen extends StatefulWidget {
   static const String name = "CategoryScreen";
