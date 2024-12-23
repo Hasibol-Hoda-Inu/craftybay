@@ -1,5 +1,7 @@
+import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/category_icon_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class CategoryListScreen extends StatefulWidget {
@@ -15,9 +17,15 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
+      onPopInvokedWithResult: (_,__)=>Get.find<MainBottomNavController>().backToHome(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Categories"),
+          leading: IconButton(
+              onPressed: (){
+                Get.find<MainBottomNavController>().backToHome();
+              },
+              icon: const Icon(Icons.arrow_back_ios)),
           bottom: PreferredSize(
               preferredSize: const Size.fromHeight(2.0),
               child: Container(
