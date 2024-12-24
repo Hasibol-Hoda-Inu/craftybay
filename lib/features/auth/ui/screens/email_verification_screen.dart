@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class EmailVerificationScreen extends StatefulWidget {
-  static const String name = "EmailVerificationScreen";
+  static const String name = "/EmailVerificationScreen";
   const EmailVerificationScreen({super.key});
 
   @override

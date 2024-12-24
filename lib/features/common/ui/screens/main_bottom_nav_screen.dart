@@ -8,7 +8,7 @@ import '../../../wish_list/ui/screens/wishlist_screen.dart';
 import '../controllers/main_bottom_nav_controller.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
-  static const String name = "MainBottomNavScreen";
+  static const String name = "/MainBottomNavScreen";
   const MainBottomNavScreen({super.key});
 
   @override

@@ -44,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16,),
-              HomeSectionHeader(title: 'Popular', onTap: (){},),
+              HomeSectionHeader(title: 'Popular', onTap: (){
+
+              },),
               const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,

@@ -8,7 +8,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../widgets/app_icon_widget.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  static const name = "OtpVerification";
+  static const name = "/OtpVerification";
   const OtpVerificationScreen({super.key});
 
   @override

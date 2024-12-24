@@ -5,6 +5,7 @@ import 'package:craftybay/features/auth/ui/screens/email_verification_screen.dar
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
+import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,7 @@ class CraftyBay extends StatelessWidget {
         CompleteProfileScreen.name : (context)=> const CompleteProfileScreen(),
         MainBottomNavScreen.name : (context)=> const MainBottomNavScreen(),
         CategoryListScreen.name : (context)=> const CategoryListScreen(),
+        ProductListScreen.name : (context)=> const ProductListScreen(),
       },
     );
   }

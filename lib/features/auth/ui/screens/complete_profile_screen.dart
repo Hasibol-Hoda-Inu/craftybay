@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../widgets/app_icon_widget.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
-  static const String name = "CompleteProfileScreen";
+  static const String name = "/CompleteProfileScreen";
   const CompleteProfileScreen({super.key});
 
   @override

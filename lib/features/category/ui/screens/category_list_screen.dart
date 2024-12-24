@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 
 class CategoryListScreen extends StatefulWidget {
-  static const String name = "CategoryScreen";
+  static const String name = "/CategoryScreen";
   const CategoryListScreen({super.key});
 
   @override
@@ -17,14 +17,12 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_,__)=>Get.find<MainBottomNavController>().backToHome(),
+      onPopInvokedWithResult: (_,__)=>_onPop,
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Categories"),
           leading: IconButton(
-              onPressed: (){
-                Get.find<MainBottomNavController>().backToHome();
-              },
+              onPressed: _onPop,
               icon: const Icon(Icons.arrow_back_ios)),
           bottom: PreferredSize(
               preferredSize: const Size.fromHeight(2.0),
@@ -42,5 +40,9 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
         ),
       ),
     );
+  }
+
+  void _onPop(){
+    Get.find<MainBottomNavController>().backToHome();
   }
 }
