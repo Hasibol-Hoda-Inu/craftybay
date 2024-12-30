@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
 import '../../../home/ui/widgets/product_card_widget.dart';
 
 class ProductListScreen extends StatefulWidget {
   static const String name = "/product/product-list-by-category";
-  const ProductListScreen({super.key});
+  const ProductListScreen({
+    super.key,
+    required this.categoryName,
+  });
+
+  final String categoryName;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -17,7 +20,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Categories"),
+        title: Text(widget.categoryName),
         leading: IconButton(
             onPressed: _onPop,
             icon: const Icon(Icons.arrow_back_ios)),
@@ -47,6 +50,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
   void _onPop(){
-    Get.find<MainBottomNavController>().backToHome();
+    Navigator.pop(context);
   }
 }

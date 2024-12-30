@@ -1,12 +1,12 @@
-import 'package:craftybay/application/assets_path.dart';
 import 'package:craftybay/features/auth/ui/screens/email_verification_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 import '../../../../application/app_colors.dart';
 import '../widgets/app_icon_widget.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const name = "/";
   const SplashScreen({super.key});
 
   @override

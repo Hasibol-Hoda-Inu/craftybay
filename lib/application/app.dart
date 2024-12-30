@@ -23,15 +23,29 @@ class CraftyBay extends StatelessWidget {
       themeMode: ThemeMode.light,
       initialBinding: ControllerBinder(),
       initialRoute: "/",
-      routes: {
-        "/" : (context)=> const SplashScreen(),
-        EmailVerificationScreen.name : (context)=> const EmailVerificationScreen(),
-        OtpVerificationScreen.name : (context)=> const OtpVerificationScreen(),
-        CompleteProfileScreen.name : (context)=> const CompleteProfileScreen(),
-        MainBottomNavScreen.name : (context)=> const MainBottomNavScreen(),
-        CategoryListScreen.name : (context)=> const CategoryListScreen(),
-        ProductListScreen.name : (context)=> const ProductListScreen(),
+      onGenerateRoute: (RouteSettings settings){
+        late Widget widget;
+        if(settings.name == SplashScreen.name){
+          widget = const SplashScreen();
+        }else if(settings.name == EmailVerificationScreen.name){
+          widget = const EmailVerificationScreen();
+        }else if (settings.name == OtpVerificationScreen.name){
+          widget = const OtpVerificationScreen();
+        }else if(settings.name == CompleteProfileScreen.name){
+          widget = const CompleteProfileScreen();
+        }else if(settings.name == MainBottomNavScreen.name){
+          widget = const MainBottomNavScreen();
+        }else if(settings.name == CategoryListScreen.name){
+          widget = const CategoryListScreen();
+        }else if(settings.name == ProductListScreen.name){
+          String name = settings.arguments as String;
+          widget = ProductListScreen(categoryName: name);
+        }
+        return MaterialPageRoute(builder: (context){
+          return widget;
+        });
       },
+
     );
   }
 }
