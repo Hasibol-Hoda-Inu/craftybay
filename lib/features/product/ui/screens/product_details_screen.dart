@@ -59,7 +59,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ],
                   ),
                   Text("Color", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 18),),
-                  CircleAvatar()
+                  CircleAvatar(),
                 ],
               ),
             ),
