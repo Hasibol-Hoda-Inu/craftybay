@@ -16,6 +16,13 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final List<String> _sizes = [
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +66,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ],
                   ),
                   Text("Color", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 18),),
+                  SizedBox(
+                    height: 40,
+                    child: ListView.builder(
+                        itemCount: _sizes.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, index)=>
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              child: CircleAvatar(
+                                radius: 18,
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
+                                child: Text(_sizes[index]),),
+                            )),
+                  ),
                   CircleAvatar(),
                 ],
               ),
