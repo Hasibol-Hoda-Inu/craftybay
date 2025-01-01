@@ -1,9 +1,12 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
 import 'package:craftybay/features/product/widgets/product_quantity_stepper_widget.dart';
+import 'package:craftybay/features/product/widgets/size_picker_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/color_picker_widget.dart';
 import '../../widgets/review_section_widget.dart';
+
 class ProductDetailsScreen extends StatefulWidget {
   static const String name = "/product/product-details";
   const ProductDetailsScreen({
@@ -16,6 +19,13 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final List<Color> _colors = [
+    Colors.black87,
+    Colors.blueAccent,
+    Colors.blueGrey,
+    Colors.green,
+    Colors.orange
+  ];
   final List<String> _sizes = [
     "S",
     "M",
@@ -42,47 +52,50 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const ProductImageCarouselSliderWidget(),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Expanded(
-                        child: Column(
-                          children: [
-                            Text("Happy New Year Special Deal 30% off",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 22,
-                                  color: AppColors.themeColor
-                                )),
-                            ReviewSectionWidget()
-                          ],
+              padding: const EdgeInsets.only(
+                  left: 16,
+                  top: 16,
+                  right: 16,
+                  bottom: 0,),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Expanded(
+                          child: Column(
+                            children: [
+                              Text("Happy New Year Special Deal 30% off",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22,
+                                    color: AppColors.themeColor
+                                  )),
+                              ReviewSectionWidget()
+                            ],
+                          ),
                         ),
-                      ),
-                      ProductQuantityStepperWidget(onChange: (int value) {},)
-                    ],
-                  ),
-                  Text("Color", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 18),),
-                  SizedBox(
-                    height: 40,
-                    child: ListView.builder(
-                        itemCount: _sizes.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, index)=>
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
-                              child: CircleAvatar(
-                                radius: 18,
-                                backgroundColor: Colors.blue,
-                                foregroundColor: Colors.white,
-                                child: Text(_sizes[index]),),
-                            )),
-                  ),
-                  CircleAvatar(),
-                ],
+                        ProductQuantityStepperWidget(onChange: (int value) {},)
+                      ],
+                    ),
+                    Text("Color", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+                    const SizedBox(height: 8,),
+                    ColorPickerWidget(colors: _colors,),
+                    const SizedBox(height: 16,),
+                    Text("Size", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+                    const SizedBox(height: 8,),
+                    SizePickerWidget(sizes: _sizes),
+                    const SizedBox(height: 16,),
+                    Text("Description", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+                    const SizedBox(height: 8,),
+                    Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
+                    style: TextTheme.of(context).bodyLarge,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
