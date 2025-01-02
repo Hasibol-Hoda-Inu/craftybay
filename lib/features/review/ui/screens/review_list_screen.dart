@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../widgets/review_card_widget.dart';
 
-class ReviewList extends StatefulWidget {
-  const ReviewList({super.key});
+class ReviewListScreen extends StatefulWidget {
+  static const String name = "/review";
+  const ReviewListScreen({super.key});
 
   @override
-  State<ReviewList> createState() => _ReviewListState();
+  State<ReviewListScreen> createState() => _ReviewListScreenState();
 }
 
-class _ReviewListState extends State<ReviewList> {
+class _ReviewListScreenState extends State<ReviewListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

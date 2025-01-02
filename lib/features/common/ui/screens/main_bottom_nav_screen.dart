@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../category/ui/screens/category_list_screen.dart';
 import '../../../home/ui/screens/home_screen.dart';
-import '../../../review/ui/screens/review_list.dart';
+import '../../../review/ui/screens/review_list_screen.dart';
 import '../../../wish_list/ui/screens/wishlist_screen.dart';
 import '../controllers/main_bottom_nav_controller.dart';
 
@@ -20,7 +20,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final List<Widget> _screens = const [
      HomeScreen(),
      CategoryListScreen(),
-     ReviewList(),
+     ReviewListScreen(),
      WishlistScreen(),
   ];
   @override

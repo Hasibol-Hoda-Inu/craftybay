@@ -89,11 +89,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     const SizedBox(height: 8,),
                     SizePickerWidget(sizes: _sizes),
                     const SizedBox(height: 16,),
-                    Text("Description", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
-                    const SizedBox(height: 8,),
-                    Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-                    style: TextTheme.of(context).bodyLarge,
-                    )
+                    buildProductDescriptionMethod(context)
                   ],
                 ),
               ),
@@ -102,6 +98,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           buildAddToCartContainer(context)
         ],
       ),
+    );
+  }
+
+  Column buildProductDescriptionMethod(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Description", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+        const SizedBox(height: 8,),
+        Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
+          style: TextTheme.of(context).bodyLarge,
+        )
+      ],
     );
   }
 

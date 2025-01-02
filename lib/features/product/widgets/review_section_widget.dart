@@ -1,3 +1,4 @@
+import 'package:craftybay/features/review/ui/screens/review_list_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../application/app_colors.dart';
@@ -20,8 +21,11 @@ class ReviewSectionWidget extends StatelessWidget {
           ],
         ),
         TextButton(
-            onPressed: (){},
-            child: const Text("Reviews")),
+            onPressed: (){
+              Navigator.pushNamed(context, ReviewListScreen.name);
+            },
+            child: const Text("Reviews"),
+        ),
         Container(
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
@@ -29,7 +33,7 @@ class ReviewSectionWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
           ),
           child: const Icon(Icons.favorite_border, color: Colors.white, size: 14,),
-        )
+        ),
       ],
     );
   }
