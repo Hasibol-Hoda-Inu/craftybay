@@ -12,6 +12,7 @@ class ColorPickerWidget extends StatefulWidget {
 
 class _ColorPickerWidgetState extends State<ColorPickerWidget> {
   Color? _selectedColor;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
