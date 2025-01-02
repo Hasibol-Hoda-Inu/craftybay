@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../application/app_colors.dart';
 import '../widgets/review_card_widget.dart';
 
 class ReviewListScreen extends StatefulWidget {
@@ -15,18 +16,66 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Wishlist"),
+        leading: IconButton(
+            onPressed: _onPop,
+            icon: const Icon(Icons.arrow_back_ios)),
+        title: const Text("Reviews"),
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(2.0),
             child: Container(
               height: 2,
               color: Colors.grey.shade200,)),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: _getReviewCardWidget(),
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: _getReviewCardWidget(),
+              ),
+            ),
+          ),
+          buildAddToCartContainer(context),
+        ],
+      ),
+    );
+  }
+
+  void _onPop(){
+    Navigator.pop(context);
+  }
+
+  Widget buildAddToCartContainer(BuildContext context) {
+    return Container(
+      height: 80,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+          color: AppColors.themeColor.withValues(alpha: 0.1),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          )
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Reviews (1000)", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 18),),
+            ],
+          ),
+          IconButton.filledTonal(
+              onPressed: (){},
+              style: IconButton.styleFrom(
+                backgroundColor: AppColors.themeColor,
+                padding: const EdgeInsets.all(12)
+              ),
+              icon: const Icon(Icons.add, color: Colors.white,))
+        ],
       ),
     );
   }
