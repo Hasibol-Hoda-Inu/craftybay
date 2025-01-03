@@ -1,6 +1,6 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
-import 'package:craftybay/features/product/widgets/product_quantity_stepper_widget.dart';
+import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
 import 'package:craftybay/features/product/widgets/size_picker_widget.dart';
 import 'package:flutter/material.dart';
 

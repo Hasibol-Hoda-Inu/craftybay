@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CreateReview extends StatefulWidget {
+  static const String name = "/create-review";
   const CreateReview({super.key});
 
   @override
@@ -16,7 +17,12 @@ class _CreateReviewState extends State<CreateReview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Wishlist"),
+        leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+        title: const Text("Write Review"),
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(2.0),
             child: Container(

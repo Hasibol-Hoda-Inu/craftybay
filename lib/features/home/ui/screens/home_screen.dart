@@ -1,4 +1,5 @@
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
+import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -44,9 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16,),
-              HomeSectionHeader(title: 'Popular', onTap: (){
-
-              },),
+              HomeSectionHeader(title: 'Popular', onTap:()=> _onTapProductListScreen(categoryName: 'Popular'),),
               const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -56,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16,),
-              HomeSectionHeader(title: 'Special', onTap: (){},),
+              HomeSectionHeader(title: 'Special', onTap:()=> _onTapProductListScreen(categoryName: 'Special'),),
               const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -66,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16,),
-              HomeSectionHeader(title: 'New', onTap: (){},),
+              HomeSectionHeader(title: 'New', onTap:(){ _onTapProductListScreen(categoryName: 'New');}),
               const SizedBox(height: 8,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -80,6 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void _onTapProductListScreen({required String categoryName}){
+    Navigator.pushNamed(context, ProductListScreen.name, arguments: categoryName);
   }
   List<Widget> _getCategoryList(){
     List<Widget> categoryList = [];

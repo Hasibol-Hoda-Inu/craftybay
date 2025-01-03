@@ -1,3 +1,4 @@
+import 'package:craftybay/features/review/ui/screens/create_review.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
@@ -36,7 +37,7 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
               ),
             ),
           ),
-          buildAddToCartContainer(context),
+          buildAddReviewsContainer(context),
         ],
       ),
     );
@@ -46,7 +47,7 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
     Navigator.pop(context);
   }
 
-  Widget buildAddToCartContainer(BuildContext context) {
+  Widget buildAddReviewsContainer(BuildContext context) {
     return Container(
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -69,7 +70,7 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
             ],
           ),
           IconButton.filledTonal(
-              onPressed: (){},
+              onPressed: _onTapAddReviewScreen,
               style: IconButton.styleFrom(
                 backgroundColor: AppColors.themeColor,
                 padding: const EdgeInsets.all(12)
@@ -78,6 +79,10 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
         ],
       ),
     );
+  }
+
+  void _onTapAddReviewScreen(){
+    Navigator.pushNamed(context, CreateReview.name);
   }
 }
 
