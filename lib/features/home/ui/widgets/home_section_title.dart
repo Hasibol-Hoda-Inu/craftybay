@@ -21,7 +21,7 @@ class HomeSectionHeader extends StatelessWidget {
         ),),
         TextButton(
             onPressed: onTap,
-            child: const Text("View all"))
+            child: const Text("View all")),
       ],
     );
   }
