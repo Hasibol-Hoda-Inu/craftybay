@@ -114,7 +114,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   onPressed: (){
                     _onTapNextScreen();
                   },
-                  child: const Text("Complete"))
+                  child: const Text("Complete"),)
             ],
           ),
         ),
