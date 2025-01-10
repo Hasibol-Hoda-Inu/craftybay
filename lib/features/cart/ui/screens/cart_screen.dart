@@ -1,7 +1,5 @@
 import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/application/assets_path.dart';
 import 'package:craftybay/features/cart/ui/widgets/cart_item_card_widget.dart';
-import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

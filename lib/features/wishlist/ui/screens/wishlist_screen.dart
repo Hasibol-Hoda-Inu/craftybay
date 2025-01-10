@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
-import '../../../common/ui/widgets/category_icon_widget.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});

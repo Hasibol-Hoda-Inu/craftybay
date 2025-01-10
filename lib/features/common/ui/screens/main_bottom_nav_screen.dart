@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../category/ui/screens/category_list_screen.dart';
 import '../../../home/ui/screens/home_screen.dart';
-import '../../../review/ui/screens/review_list_screen.dart';
 import '../../../wishlist/ui/screens/wishlist_screen.dart';
 import '../controllers/main_bottom_nav_controller.dart';
 
