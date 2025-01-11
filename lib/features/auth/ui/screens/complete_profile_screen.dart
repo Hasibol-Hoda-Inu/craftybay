@@ -1,6 +1,8 @@
+import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/app_icon_widget.dart';
 

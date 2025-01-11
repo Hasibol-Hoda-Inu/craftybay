@@ -1,7 +1,11 @@
+import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class EmailVerificationScreen extends StatefulWidget {
@@ -16,6 +20,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEController = TextEditingController();
 
+  final EmailVerificationController _emailVController = Get.find<EmailVerificationController>();
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +58,18 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                       ),
               ],)),
               const SizedBox(height: 24,),
-              ElevatedButton(
-                  onPressed: (){
-                    _onTapNavigateToOTPVerificationScreen();
-                  },
-                  child: const Text("Next"))
+              GetBuilder<EmailVerificationController>(
+                builder: (controller) {
+                  if(controller.inProgress){
+                   return const CenteredCircularProgressIndicator();
+                  }
+                  return ElevatedButton(
+                      onPressed: (){
+                        _onTapNavigateToOTPVerificationScreen();
+                      },
+                      child: const Text("Next"));
+                }
+              )
             ],
           ),
         ),
@@ -66,8 +78,23 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   void _onTapNavigateToOTPVerificationScreen(){
-  Navigator.pushReplacementNamed(context, OtpVerificationScreen.name);
+  if(_formKey.currentState!.validate()){
+    _getVerifyEmailAddress();
   }
+  }
+
+Future<void> _getVerifyEmailAddress()async {
+  final bool isSuccess = await _emailVController.verifyEmail(_emailTEController.text.trim());
+  if(isSuccess){
+    if(mounted){
+      Navigator.pushReplacementNamed(context, OtpVerificationScreen.name);
+    }
+  }else{
+    if(mounted){
+      showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong");
+    }
+  }
+}
 
   @override
   void dispose() {
