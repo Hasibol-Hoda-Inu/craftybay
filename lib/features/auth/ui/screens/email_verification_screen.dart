@@ -87,7 +87,9 @@ Future<void> _getVerifyEmailAddress()async {
   final bool isSuccess = await _emailVController.verifyEmail(_emailTEController.text.trim());
   if(isSuccess){
     if(mounted){
-      Navigator.pushReplacementNamed(context, OtpVerificationScreen.name);
+      Navigator.pushReplacementNamed(context, OtpVerificationScreen.name,
+          arguments: {"email": _emailTEController.text.trim(),"callBackFunction": _getVerifyEmailAddress()}
+      );
     }
   }else{
     if(mounted){
@@ -95,6 +97,7 @@ Future<void> _getVerifyEmailAddress()async {
     }
   }
 }
+
 
   @override
   void dispose() {

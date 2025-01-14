@@ -4,8 +4,8 @@ void showSnackBarMessage(BuildContext context, String message, [bool isErrorMess
   ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, style: const TextStyle(color: Colors.white),),
-        backgroundColor: isErrorMessage? Colors.red : Colors.green,
+        backgroundColor: isErrorMessage? Colors.green : Colors.red,
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.symmetric(horizontal: 12,),
+        margin: const EdgeInsets.all(12),
       ));
 }
