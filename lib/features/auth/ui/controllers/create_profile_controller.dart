@@ -1,7 +1,6 @@
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../application/urls.dart';
 
@@ -50,7 +49,7 @@ class CreateProfileController extends GetxController{
       "ship_phone" : shippingNumber,
     };
 
-    String? token =  await getToken();
+    String? token = await Get.find<AuthController>().getToken();
     final NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
         Urls.createProfile,
         accessToken: token,
@@ -70,9 +69,9 @@ class CreateProfileController extends GetxController{
     return isSuccess;
   }
 
-  Future<String?> getToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString('accessToken');
-  }
+  // Future<String?> getToken() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   return sharedPreferences.getString('accessToken');
+  // }
 
 }

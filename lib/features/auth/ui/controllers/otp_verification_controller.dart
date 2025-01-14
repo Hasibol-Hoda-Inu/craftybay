@@ -34,9 +34,10 @@ class OtpVerificationController extends GetxController{
     _errorMessage = null;
     String token = response.responseData["data"];
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString('accessToken', token);
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // await sharedPreferences.setString('accessToken', token);
 
+    Get.find<AuthController>().saveToken(token);
     _logger.i("Token saved successfully: $token");
 
     await Get.find<ReadProfileController>().readProfile(token);
