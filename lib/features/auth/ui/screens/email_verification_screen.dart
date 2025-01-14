@@ -87,13 +87,11 @@ Future<void> _getVerifyEmailAddress()async {
   final bool isSuccess = await _emailVController.verifyEmail(_emailTEController.text.trim());
   if(isSuccess){
     if(mounted){
-      Navigator.pushReplacementNamed(context, OtpVerificationScreen.name,
-          arguments: {"email": _emailTEController.text.trim(),"callBackFunction": _getVerifyEmailAddress()}
-      );
+      Navigator.pushReplacementNamed(context, OtpVerificationScreen.name, arguments: _emailTEController.text.trim(),);
     }
   }else{
     if(mounted){
-      showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong");
+      showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong. Please try again");
     }
   }
 }

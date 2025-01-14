@@ -34,8 +34,7 @@ class CraftyBay extends StatelessWidget {
           widget = const EmailVerificationScreen();
         }else if (settings.name == OtpVerificationScreen.name){
           String userEmail = settings.arguments as String;
-          VoidCallback getEmailVerification = settings.arguments as VoidCallback;
-          widget = OtpVerificationScreen(email: userEmail, sendEmail: () {getEmailVerification();},);
+          widget = OtpVerificationScreen(email: userEmail,);
         }else if(settings.name == CompleteProfileScreen.name){
           widget = const CompleteProfileScreen();
         }else if(settings.name == MainBottomNavScreen.name){

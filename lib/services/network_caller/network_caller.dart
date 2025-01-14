@@ -18,12 +18,20 @@ class NetworkResponse{
 }
 class NetworkCaller {
   final Logger _logger = Logger();
-  Future<NetworkResponse> getRequest(String url) async{
+  Future<NetworkResponse> getRequest(String url, {String? accessToken}) async{
     try{
       Uri uri = Uri.parse(url);
+      Map<String, String> headers = {
+        "content-type": "application/json"
+      };
+      if(accessToken != null){
+        headers["token"] = accessToken;
+      }
       _logRequest(url);
-      Response response = await get(uri);
+      Response response = await get(uri, headers: headers);
+
       _logResponse(url: url, statusCode: response.statusCode, headers: response.headers, body: response.body);
+
       final decodedData = jsonDecode(response.body);
       if (response.statusCode == 200) {
         return NetworkResponse(isSuccess: true, statusCode: response.statusCode, responseData: decodedData);
@@ -36,12 +44,15 @@ class NetworkCaller {
     }
   }
 
-  Future<NetworkResponse> postRequest(String url, {Map<String, dynamic>? body}) async{
+  Future<NetworkResponse> postRequest(String url, {String? accessToken, Map<String, dynamic>? body}) async{
     try{
       Uri uri = Uri.parse(url);
       Map<String, String> headers = {
         "content-type": "application/json",
       };
+      if(accessToken != null){
+        headers["token"] = accessToken;
+      }
 
       _logRequest(url, headers, body);
 

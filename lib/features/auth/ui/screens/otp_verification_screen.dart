@@ -1,8 +1,11 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/otp_verification_controller.dart';
+import 'package:craftybay/features/auth/ui/controllers/read_profile_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/complete_profile_screen.dart';
-import 'package:craftybay/features/auth/controllers/timer_controller.dart';
+import 'package:craftybay/features/auth/ui/controllers/timer_controller.dart';
+import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +19,8 @@ class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({
     super.key,
     required this.email,
-    required this.sendEmail
   });
   final String email;
-  final VoidCallback sendEmail;
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -29,9 +30,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TimerController _timerController = Get.put(TimerController());
-  final OtpVerificationController _otpVController = OtpVerificationController();
-  final EmailVerificationController _emailVController = EmailVerificationController();
+  final TimerController _timerController = Get.find<TimerController>();
+  final OtpVerificationController _otpVController = Get.find<OtpVerificationController>();
+  final EmailVerificationController _emailVController = Get.find<EmailVerificationController>();
 
   @override
   void initState() {
@@ -151,8 +152,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     final bool isSuccess = await _otpVController.verifyOtp(widget.email, _otpTEController.text);
     if(isSuccess){
       _timerController.startTimer();
-      if(mounted){
-        Navigator.pushNamedAndRemoveUntil(context, CompleteProfileScreen.name, (predicate)=>false);
+      if(_otpVController.shouldNavigateCompleteProfile){
+        if(mounted){
+          Navigator.pushNamed(context, CompleteProfileScreen.name);
+        }
+      }else{
+        if(mounted){
+          Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (predicate)=>false);
+        }
       }
     }else{
       if(mounted){
@@ -174,7 +181,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   void dispose() {
-    _otpTEController.dispose();
     _otpVController.dispose();
     _timerController.dispose();
     super.dispose();
