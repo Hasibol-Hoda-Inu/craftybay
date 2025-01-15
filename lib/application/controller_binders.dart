@@ -7,6 +7,7 @@ import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_control
 import 'package:get/get.dart';
 
 import '../features/auth/ui/controllers/create_profile_controller.dart';
+import '../features/home/ui/controller/home_banner_list_controller.dart';
 import '../services/network_caller/network_caller.dart';
 
 class ControllerBinder extends Bindings{
@@ -20,6 +21,7 @@ class ControllerBinder extends Bindings{
     Get.put(ReadProfileController());
     Get.put(AuthController());
     Get.put(CreateProfileController());
+    Get.put(HomeBannerListController());
   }
 
 }

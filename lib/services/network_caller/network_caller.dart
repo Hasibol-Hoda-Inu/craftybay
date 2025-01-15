@@ -16,6 +16,7 @@ class NetworkResponse{
     this.errorMessage,
   });
 }
+
 class NetworkCaller {
   final Logger _logger = Logger();
   Future<NetworkResponse> getRequest(String url, {String? accessToken}) async{

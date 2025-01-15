@@ -1,4 +1,5 @@
 import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
+import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,12 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
      CartScreen(),
      WishlistScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<HomeBannerListController>().getBannerSliders();
+  }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainBottomNavController>(

@@ -1,4 +1,5 @@
 import 'package:craftybay/features/auth/ui/screens/email_verification_screen.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -22,7 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _goToEmailVerificationScreen()async {
     await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushReplacementNamed(context, EmailVerificationScreen.name);
+    if(mounted){
+      Navigator.pushReplacementNamed(context, MainBottomNavScreen.name);
+    }
   }
 
   @override

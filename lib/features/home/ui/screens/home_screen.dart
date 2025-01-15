@@ -1,4 +1,6 @@
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
 import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../../application/assets_path.dart';
 import '../../../common/ui/widgets/category_icon_widget.dart';
+import '../../../common/ui/widgets/shimmer_loading.dart';
 import '../widgets/home_carousel_slider_widget.dart';
 import '../widgets/home_section_title.dart';
 import '../widgets/product_card_widget.dart';
@@ -20,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController sbController = TextEditingController();
+  final HomeBannerListController _homeBLController = Get.find<HomeBannerListController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SearchBoxWidget(controller: sbController,),
               const SizedBox(height: 16,),
-              const HomeCarouselSliderWidget(),
+              GetBuilder<HomeBannerListController>(
+                builder: (controller) {
+                  if(controller.inProgress){
+                    return const ShimmerLoading();
+                  }
+                  return HomeCarouselSliderWidget(bannerList: controller.bannerList,);
+                }
+              ),
               const SizedBox(height: 16,),
               HomeSectionHeader(title: 'Category', onTap: (){
                 Get.find<MainBottomNavController>().changeIndex(1);

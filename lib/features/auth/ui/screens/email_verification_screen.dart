@@ -3,6 +3,7 @@ import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart'
 import 'package:craftybay/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:craftybay/features/common/ui/widgets/shimmer_loading.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
