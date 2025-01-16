@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerLoading extends StatefulWidget {
-  const ShimmerLoading({super.key});
+class BannerShimmerLoading extends StatefulWidget {
+  const BannerShimmerLoading({super.key});
 
   @override
-  State<ShimmerLoading> createState() => _ShimmerLoadingState();
+  State<BannerShimmerLoading> createState() => _BannerShimmerLoadingState();
 }
 
-class _ShimmerLoadingState extends State<ShimmerLoading> {
+class _BannerShimmerLoadingState extends State<BannerShimmerLoading> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(

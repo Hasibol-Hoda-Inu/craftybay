@@ -1,10 +1,8 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/otp_verification_controller.dart';
-import 'package:craftybay/features/auth/ui/controllers/read_profile_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/complete_profile_screen.dart';
 import 'package:craftybay/features/auth/ui/controllers/timer_controller.dart';
-import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';

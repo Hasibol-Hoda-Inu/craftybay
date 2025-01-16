@@ -53,7 +53,7 @@ class _HomeCarouselSliderWidgetState extends State<HomeCarouselSliderWidget> {
                             width: 120,
                             child: ElevatedButton(
                                 onPressed: (){},
-                                child: Text("Buy Now")),
+                                child: const Text("Buy Now")),
                           )
                         ],
                       ),

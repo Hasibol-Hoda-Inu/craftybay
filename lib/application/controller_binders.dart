@@ -3,6 +3,7 @@ import 'package:craftybay/features/auth/ui/controllers/read_profile_controller.d
 import 'package:craftybay/features/auth/ui/controllers/timer_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,7 @@ class ControllerBinder extends Bindings{
     Get.put(AuthController());
     Get.put(CreateProfileController());
     Get.put(HomeBannerListController());
+    Get.put(CategoryListController());
   }
 
 }

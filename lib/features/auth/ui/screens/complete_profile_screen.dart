@@ -1,7 +1,7 @@
 import 'package:craftybay/features/auth/ui/controllers/create_profile_controller.dart';
-import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -263,11 +263,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                     ],)),
               const SizedBox(height: 24,),
-              ElevatedButton(
-                  onPressed: (){
-                    _onTapNextScreen();
-                  },
-                  child: const Text("Complete"),
+              GetBuilder<CreateProfileController>(
+                builder: (controller) {
+                  if(controller.inProgress){
+                    return const CenteredCircularProgressIndicator();
+                  }
+                  return ElevatedButton(
+                      onPressed: (){
+                        _onTapNextScreen();
+                      },
+                      child: const Text("Complete"),
+                  );
+                }
               ),
               const SizedBox(height: 24,),
             ],

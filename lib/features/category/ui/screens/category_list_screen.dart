@@ -1,12 +1,16 @@
+import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/category_icon_widget.dart';
+import 'package:craftybay/features/home/ui/widgets/banner_shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
 class CategoryListScreen extends StatefulWidget {
   static const String name = "/CategoryScreen";
-  const CategoryListScreen({super.key});
+  const CategoryListScreen({
+    super.key,
+  });
 
   @override
   State<CategoryListScreen> createState() => _CategoryListScreenState();
@@ -32,10 +36,17 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-              itemBuilder: (BuildContext context, index)=>const CategoryIconWidget(),
-            itemCount: 20,
+          child: GetBuilder<CategoryListController>(
+            builder: (controller) {
+              if(controller.inProgress){
+                return const BannerShimmerLoading();
+              }
+              return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                  itemBuilder: (BuildContext context, index)=> CategoryIconWidget(categoryModel: controller.categoryList[index],),
+                itemCount: controller.categoryList.length,
+              );
+            }
           ),
         ),
       ),
