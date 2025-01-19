@@ -1,8 +1,10 @@
 import 'package:craftybay/features/common/data/models/category_model.dart';
+import 'package:craftybay/features/common/data/models/product_model.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/product_list_controller.dart';
 import 'package:craftybay/features/home/ui/widgets/category_list_shimmer_loading.dart';
 import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     spacing: 12,
-                    children: _getProductCardList(),
+                    children: _getProductCardList([]),
                   ),
                 ),
                 const SizedBox(height: 16,),
@@ -87,18 +89,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     spacing: 12,
-                    children: _getProductCardList(),
+                    children: _getProductCardList([]),
                   ),
                 ),
                 const SizedBox(height: 16,),
                 HomeSectionHeader(title: 'New', onTap:(){ _onTapProductListScreen(categoryName: 'New');}),
                 const SizedBox(height: 8,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    spacing: 12,
-                    children: _getProductCardList(),
-                  ),
+                GetBuilder<ProductListByRemarksController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                      return const CategoryListShimmerLoading();
+                    }
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 12,
+                        children: _getProductCardList(controller.productList),
+                      ),
+                    );
+                  }
                 ),
               ],
             ),
@@ -120,10 +129,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return categoryList;
   }
 
-  List<Widget> _getProductCardList(){
+  List<Widget> _getProductCardList(List<ProductModel> productList){
     List<Widget> productCardList = [];
-    for(int i=0; i<10; i++){
-      productCardList.add(const ProductCardWidget());
+    for(int i=0; i<productList.length; i++){
+      productCardList.add(ProductCardWidget(productModel: productList[i],));
     }
     return productCardList;
   }
