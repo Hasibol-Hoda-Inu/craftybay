@@ -2,10 +2,12 @@ import 'package:craftybay/features/common/data/models/category_model.dart';
 import 'package:craftybay/features/common/data/models/product_model.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
-import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
-import 'package:craftybay/features/home/ui/controller/product_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/new_product_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/special_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/widgets/category_list_shimmer_loading.dart';
+import 'package:craftybay/features/home/ui/widgets/product_list_shimmer_loading.dart';
+import 'package:craftybay/features/product/ui/screens/product_list_by_remarks_screen.dart';
 import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +15,7 @@ import 'package:get/get.dart';
 
 import '../../../../application/assets_path.dart';
 import '../../../common/ui/widgets/category_icon_widget.dart';
+import '../controller/popular_product_list_controller.dart';
 import '../widgets/banner_shimmer_loading.dart';
 import '../widgets/home_carousel_slider_widget.dart';
 import '../widgets/home_section_title.dart';
@@ -35,8 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: _buildAppBar(),
       body: RefreshIndicator(
         onRefresh: ()async{
-          Get.find<CategoryListController>().getCategoryList();
           Get.find<HomeBannerListController>().getBannerSliders();
+          Get.find<CategoryListController>().getCategoryList();
+          Get.find<ProductListByPopularController>().getPopularProductList();
+          Get.find<ProductListBySpecialController>().getSpecialProductList();
+          Get.find<ProductListByNewController>().getNewProductList();
         },
         child: SingleChildScrollView(
           child: Padding(
@@ -73,32 +79,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 ),
                 const SizedBox(height: 16,),
-                HomeSectionHeader(title: 'Popular', onTap:()=> _onTapProductListScreen(categoryName: 'Popular'),),
+                HomeSectionHeader(title: 'Popular', onTap:()=>_onTapProductListScreen(categoryName: 'Popular')),
                 const SizedBox(height: 8,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    spacing: 12,
-                    children: _getProductCardList([]),
-                  ),
+                GetBuilder<ProductListByPopularController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                      return const ProductListShimmerLoading();
+                    }
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 12,
+                        children: _getProductCardList(controller.productList),
+                      ),
+                    );
+                  }
                 ),
                 const SizedBox(height: 16,),
                 HomeSectionHeader(title: 'Special', onTap:()=> _onTapProductListScreen(categoryName: 'Special'),),
                 const SizedBox(height: 8,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    spacing: 12,
-                    children: _getProductCardList([]),
-                  ),
+                GetBuilder<ProductListBySpecialController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                      return const ProductListShimmerLoading();
+                    }
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 12,
+                        children: _getProductCardList(controller.productList),
+                      ),
+                    );
+                  }
                 ),
                 const SizedBox(height: 16,),
                 HomeSectionHeader(title: 'New', onTap:(){ _onTapProductListScreen(categoryName: 'New');}),
                 const SizedBox(height: 8,),
-                GetBuilder<ProductListByRemarksController>(
+                GetBuilder<ProductListByNewController>(
                   builder: (controller) {
                     if(controller.inProgress){
-                      return const CategoryListShimmerLoading();
+                      return const ProductListShimmerLoading();
                     }
                     return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,

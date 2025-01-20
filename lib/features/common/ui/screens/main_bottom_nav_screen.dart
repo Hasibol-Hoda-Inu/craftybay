@@ -1,7 +1,9 @@
 import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
-import 'package:craftybay/features/home/ui/controller/product_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/new_product_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/popular_product_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/special_product_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +34,9 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     super.initState();
     Get.find<HomeBannerListController>().getBannerSliders();
     Get.find<CategoryListController>().getCategoryList();
-    Get.find<ProductListByRemarksController>().getProductList();
+    Get.find<ProductListByNewController>().getNewProductList();
+    Get.find<ProductListBySpecialController>().getSpecialProductList();
+    Get.find<ProductListByPopularController>().getPopularProductList();
   }
   @override
   Widget build(BuildContext context) {

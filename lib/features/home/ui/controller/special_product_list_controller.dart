@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../../application/urls.dart';
 import '../../../common/data/models/product_model.dart';
 
-class ProductListByRemarksController extends GetxController{
+class ProductListBySpecialController extends GetxController{
   
   bool _inProgress = false;
   bool get inProgress => _inProgress;
@@ -16,12 +16,12 @@ class ProductListByRemarksController extends GetxController{
   ProductListModel? _productListModel;
   List<ProductModel> get productList => _productListModel?.productList ?? [];
   
-  Future<bool> getProductList()async{
+  Future<bool> getSpecialProductList()async{
     bool isSuccess = false;
     _inProgress = true;
     update();
     
-    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.productListByRemarksList("new"));
+    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.productListByRemarksList("special"));
     if(response.isSuccess){
     isSuccess = true;
     _productListModel = ProductListModel.fromJson(response.responseData);
