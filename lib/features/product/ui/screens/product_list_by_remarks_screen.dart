@@ -1,11 +1,16 @@
+import 'package:craftybay/features/common/data/models/product_model.dart';
+import 'package:craftybay/features/home/ui/widgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProductListByRemarksScreen extends StatefulWidget {
   static const String name = "/product/product-list-by-remarks";
   const ProductListByRemarksScreen({
     super.key,
+    required this.productList,
+    required this.remark,
   });
-
+  final List<ProductModel> productList;
+  final String remark;
   @override
   State<ProductListByRemarksScreen> createState() => _ProductListByRemarksScreenState();
 }
@@ -15,7 +20,7 @@ class _ProductListByRemarksScreenState extends State<ProductListByRemarksScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Remarks"),
+        title:  Text(widget.remark),
         leading: IconButton(
             onPressed: _onPop,
             icon: const Icon(Icons.arrow_back_ios)),
@@ -32,15 +37,15 @@ class _ProductListByRemarksScreenState extends State<ProductListByRemarksScreen>
           right: 8,
           bottom: 0,
         ),
-        // child: GridView.builder(
-        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //     crossAxisCount: 3,
-        //     mainAxisSpacing: 18,
-        //   ),
-        //   itemBuilder: (BuildContext context, index)=>const FittedBox(child: ProductCardWidget(productList: [],)),
-        //   itemCount: 10,
-        //
-        // ),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 18,
+          ),
+          itemBuilder: (BuildContext context, index)=> FittedBox(child:ProductCardWidget( productModel: widget.productList[index])),
+          itemCount: widget.productList.length,
+
+        ),
       ),
     );
   }

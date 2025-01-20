@@ -6,9 +6,8 @@ import 'package:craftybay/features/home/ui/controller/home_banner_list_controlle
 import 'package:craftybay/features/home/ui/controller/new_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/special_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/widgets/category_list_shimmer_loading.dart';
-import 'package:craftybay/features/home/ui/widgets/product_list_shimmer_loading.dart';
+import 'package:craftybay/features/common/ui/widgets/product_list_shimmer_loading.dart';
 import 'package:craftybay/features/product/ui/screens/product_list_by_remarks_screen.dart';
-import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -31,6 +30,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController sbController = TextEditingController();
+  final ProductListByPopularController _popularPLController = Get.find<ProductListByPopularController>();
+  final ProductListBySpecialController _specialPLController = Get.find<ProductListBySpecialController>();
+  final ProductListByNewController _newPLController = Get.find<ProductListByNewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +81,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 ),
                 const SizedBox(height: 16,),
-                HomeSectionHeader(title: 'Popular', onTap:()=>_onTapProductListScreen(categoryName: 'Popular')),
+                HomeSectionHeader(title: 'Popular',
+                    onTap:()=> Navigator.pushNamed(context, ProductListByRemarksScreen.name,
+                    arguments: {
+                      "productListByRemark" : _popularPLController.productList,
+                      "remark" : "Popular",
+                    }
+                    )
+                ),
                 const SizedBox(height: 8,),
                 GetBuilder<ProductListByPopularController>(
                   builder: (controller) {
@@ -96,7 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 ),
                 const SizedBox(height: 16,),
-                HomeSectionHeader(title: 'Special', onTap:()=> _onTapProductListScreen(categoryName: 'Special'),),
+                HomeSectionHeader(title: 'Special', onTap:()=> Navigator.pushNamed(context, ProductListByRemarksScreen.name,
+                    arguments: {
+                      "productListByRemark" : _specialPLController.productList,
+                      "remark" : "Special",
+                    }
+                )),
                 const SizedBox(height: 8,),
                 GetBuilder<ProductListBySpecialController>(
                   builder: (controller) {
@@ -113,7 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 ),
                 const SizedBox(height: 16,),
-                HomeSectionHeader(title: 'New', onTap:(){ _onTapProductListScreen(categoryName: 'New');}),
+                HomeSectionHeader(title: 'New', onTap:()=> Navigator.pushNamed(context, ProductListByRemarksScreen.name,
+                    arguments: {
+                      "productListByRemark" : _newPLController.productList,
+                      "remark" : "New",
+                    }
+                )),
                 const SizedBox(height: 8,),
                 GetBuilder<ProductListByNewController>(
                   builder: (controller) {
@@ -138,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onTapProductListScreen({required String categoryName}){
-    Navigator.pushNamed(context, ProductListScreen.name, arguments: categoryName);
+    Navigator.pushNamed(context, ProductListByRemarksScreen.name, arguments: categoryName);
   }
 
   List<Widget> _getCategoryList(List<CategoryModel> categoryModel){

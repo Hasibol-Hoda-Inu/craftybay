@@ -1,5 +1,5 @@
 import 'package:craftybay/features/common/data/models/category_model.dart';
-import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
+import 'package:craftybay/features/product/ui/screens/product_list_by_category_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
@@ -16,7 +16,12 @@ class CategoryIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ProductListScreen.name, arguments: "Laptop");
+        Navigator.pushNamed(context, ProductListByCategoryScreen.name,
+            arguments:{
+             "categoryName":categoryModel.categoryName,
+              "categoryId": categoryModel.id
+            },
+        );
       },
       child: Column(
         children: [

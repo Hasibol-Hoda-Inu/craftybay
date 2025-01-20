@@ -7,7 +7,7 @@ import 'package:craftybay/features/category/ui/screens/category_list_screen.dart
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:craftybay/features/product/ui/screens/product_list_by_remarks_screen.dart';
-import 'package:craftybay/features/product/ui/screens/product_list_screen.dart';
+import 'package:craftybay/features/product/ui/screens/product_list_by_category_screen.dart';
 import 'package:craftybay/features/review/ui/screens/create_review.dart';
 import 'package:craftybay/features/review/ui/screens/review_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +43,15 @@ class CraftyBay extends StatelessWidget {
           widget = const MainBottomNavScreen();
         }else if(settings.name == CategoryListScreen.name){
           widget = const CategoryListScreen();
-        }else if(settings.name == ProductListScreen.name){
-          String name = settings.arguments as String;
-          widget = ProductListScreen(categoryName: name);
+        }else if(settings.name == ProductListByCategoryScreen.name){
+          Map<String, dynamic> name = settings.arguments as Map<String, dynamic>;
+          widget = ProductListByCategoryScreen(categoryName: name['categoryName'], categoryId: name["categoryId"],);
         }else if(settings.name == ProductListByRemarksScreen.name){
-          widget = const ProductListByRemarksScreen();
+          Map<String, dynamic> productListByRemarks = settings.arguments as Map<String, dynamic>;
+          widget = ProductListByRemarksScreen(
+            productList: productListByRemarks["productListByRemark"],
+            remark: productListByRemarks["remark"],
+          );
         }else if(settings.name == ProductDetailsScreen.name){
           int id = settings.arguments as int;
           widget = ProductDetailsScreen(productId: id);
