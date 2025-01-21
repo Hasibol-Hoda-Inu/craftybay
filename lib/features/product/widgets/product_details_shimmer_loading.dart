@@ -14,49 +14,78 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade300,
       highlightColor: Colors.grey.shade100,
-      child: Column(
-        children: [
-          Container(
-            width: double.maxFinite,
-            height: 120,
-            color: Colors.white,
-          ),
-          Container(
-            width: 250,
-            height: 30,
-            color: Colors.white,
-          ),
-          Container(
-            width: 120,
-            height: 30,
-            color: Colors.white,
-          ),
-          Container(
-            width: 40,
-            height: 30,
-            color: Colors.white,
-          ),
-          Container(
-            width: double.maxFinite,
-            height: 60,
-            color: Colors.white,
-          ),
-          Container(
-            width: double.maxFinite,
-            height: 60,
-            color: Colors.white,
-          ),
-          Container(
-            width: double.maxFinite,
-            height: 150,
-            color: Colors.white,
-          ),
-          Container(
-            width: double.maxFinite,
-            height: 40,
-            color: Colors.white,
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 12,
+          children: [
+            Container(
+              width: double.maxFinite,
+              height: 260,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: 250,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: 120,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: 40,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: double.maxFinite,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: double.maxFinite,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: double.maxFinite,
+              height: 180,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              width: double.maxFinite,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
