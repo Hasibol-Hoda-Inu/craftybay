@@ -1,10 +1,14 @@
 import 'package:craftybay/application/app_colors.dart';
+import 'package:craftybay/features/common/ui/widgets/product_list_shimmer_loading.dart';
+import 'package:craftybay/features/product/ui/controller/product_details_controller.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
 import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
 import 'package:craftybay/features/product/widgets/size_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../widgets/color_picker_widget.dart';
+import '../../widgets/product_details_shimmer_loading.dart';
 import '../../widgets/review_section_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -33,6 +37,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     "XL",
     "XXL",
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,74 +58,76 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               height: 2,
               color: Colors.grey.shade200,)),
       ),
-      body: Column(
-        children: [
-          const ProductImageCarouselSliderWidget(),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 16,
-                  top: 16,
-                  right: 16,
-                  bottom: 0,),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+      body: GetBuilder<ProductDetailsController>(
+        builder: (controller) {
+          if(controller.inProgress){
+            return const ProductDetailsShimmerLoading();
+          }
+          if(controller.errorMessage != null){
+            return Center(child: Text(controller.errorMessage!),);
+          }
+          return Column(
+            children: [
+              const ProductImageCarouselSliderWidget(),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16,
+                      top: 16,
+                      right: 16,
+                      bottom: 0,),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Expanded(
-                          child: Column(
-                            children: [
-                              Text("Happy New Year Special Deal 30% off",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 22,
-                                    color: AppColors.themeColor
-                                  )),
-                              ReviewSectionWidget()
-                            ],
-                          ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(controller.productDetails?.product?.title ?? "",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 22,
+                                        color: AppColors.themeColor
+                                      )),
+                                  const ReviewSectionWidget()
+                                ],
+                              ),
+                            ),
+                            ProductQuantityStepperWidget(onChange: (int value) {},)
+                          ],
                         ),
-                        ProductQuantityStepperWidget(onChange: (int value) {},)
+                        Text("Color", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+                        const SizedBox(height: 8,),
+                        ColorPickerWidget(colors: _colors,),
+                        const SizedBox(height: 16,),
+                        Text("Size", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+                        const SizedBox(height: 8,),
+                        SizePickerWidget(sizes: _sizes),
+                        const SizedBox(height: 16,),
+                        Text("Description", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
+                        const SizedBox(height: 8,),
+                        Text(controller.productDetails?.des ?? "",
+                          style: TextTheme.of(context).bodyLarge,
+                        )
                       ],
                     ),
-                    Text("Color", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
-                    const SizedBox(height: 8,),
-                    ColorPickerWidget(colors: _colors,),
-                    const SizedBox(height: 16,),
-                    Text("Size", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
-                    const SizedBox(height: 8,),
-                    SizePickerWidget(sizes: _sizes),
-                    const SizedBox(height: 16,),
-                    buildProductDescriptionMethod(context)
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          buildAddToCartContainer(context)
-        ],
+              buildAddToCartContainer(context, controller.productDetails?.product?.price ?? "")
+            ],
+          );
+        }
       ),
     );
   }
 
-  Column buildProductDescriptionMethod(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Description", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
-        const SizedBox(height: 8,),
-        Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-          style: TextTheme.of(context).bodyLarge,
-        )
-      ],
-    );
-  }
-
-  Widget buildAddToCartContainer(BuildContext context) {
+  Widget buildAddToCartContainer(BuildContext context, String price) {
     return Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -134,7 +147,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Price", style: TextTheme.of(context).titleMedium,),
-                  Text("\$100", style: TextStyle(
+                  Text("\$$price", style: TextStyle(
                     color: AppColors.themeColor,
                     fontSize: 22,
                     fontWeight: FontWeight.w700
