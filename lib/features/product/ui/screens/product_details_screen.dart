@@ -68,7 +68,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           }
           return Column(
             children: [
-              const ProductImageCarouselSliderWidget(),
+              ProductImageCarouselSliderWidget(imageUrls: [
+                controller.productDetails?.img1 ?? "",
+                controller.productDetails?.img2 ?? "",
+                controller.productDetails?.img3 ?? "",
+              ],),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(

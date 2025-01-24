@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class ProductImageCarouselSliderWidget extends StatefulWidget {
   const ProductImageCarouselSliderWidget({
     super.key,
+    required this.imageUrls,
   });
-
+  final List<String> imageUrls;
   @override
   State<ProductImageCarouselSliderWidget> createState() => _ProductImageCarouselSliderWidgetState();
 }
@@ -25,16 +26,20 @@ class _ProductImageCarouselSliderWidgetState extends State<ProductImageCarouselS
                 _valueNotifier.value = currentIndex;
               }
           ),
-          items: [1,2,3,4,5].map((i) {
+          items: widget.imageUrls.map((url) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         color: AppColors.themeColor,
+                        image: DecorationImage(
+                            image: NetworkImage(url),
+                            fit: BoxFit.cover,
+                        )
                     ),
                     alignment: Alignment.center,
-                    child: Text('text $i', style: const TextStyle(fontSize: 16.0),)
+
                 );
               },
             );
@@ -46,12 +51,12 @@ class _ProductImageCarouselSliderWidgetState extends State<ProductImageCarouselS
           bottom: 10,
           child: ValueListenableBuilder(
               valueListenable: _valueNotifier,
-              builder: (context, value, widget) {
+              builder: (context, value, _) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: 6,
                   children: [
-                    for(int i = 0; i< 5; i++)
+                    for(int i = 0; i< widget.imageUrls.length; i++)
                       CircleAvatar(
                         radius: 6,
                         backgroundColor: value==i? AppColors.themeColor : Colors.grey.shade300,
