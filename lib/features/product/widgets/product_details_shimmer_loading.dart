@@ -83,7 +83,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
               ),
-            ),
+            )
           ],
         ),
       ),
