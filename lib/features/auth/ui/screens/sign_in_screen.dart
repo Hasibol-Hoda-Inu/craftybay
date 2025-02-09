@@ -2,6 +2,7 @@ import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,8 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 120,),
               const AppLogoWidget(),
               const SizedBox(height: 36,),
-              Text("Welcome Back", style: Theme.of(context).textTheme.titleLarge ,),
-              Text("Please enter your email address", style: Theme.of(context).textTheme.bodyLarge,),
+              Text("Sign in", style: Theme.of(context).textTheme.titleLarge ,),
+              Text("Please enter your email and password to sign in", style: Theme.of(context).textTheme.bodyLarge,),
               const SizedBox(height: 24,),
               Form(
                 key: _formKey,
@@ -70,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: const InputDecoration(
-                          hintText: 'Email address'
+                          hintText: 'Password'
                         ),
                       ),
               ],)),
@@ -107,7 +108,7 @@ Future<void> _getVerifyEmailAddress()async {
   );
   if(isSuccess){
     if(mounted){
-      Navigator.pushReplacementNamed(context, OtpVerificationScreen.name, arguments: _emailTEController.text.trim(),);
+      Navigator.pushReplacementNamed(context, MainBottomNavScreen.name, arguments: _emailTEController.text.trim(),);
     }
   }else{
     if(mounted){

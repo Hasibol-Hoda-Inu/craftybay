@@ -127,7 +127,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     child: TextButton(
                       onPressed: (){
                         ///TODO: email send krr api call hbe
-                        _resendVerifyEmailAddress();
+                        // _resendVerifyEmailAddress();
                       },
                       child: const Text("Resend code"),
                      ),
@@ -166,16 +166,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     }
   }
 
-  Future<void> _resendVerifyEmailAddress()async {
-    final bool isSuccess = await _emailVController.verifyEmail(widget.email);
-    if(isSuccess){
-      _timerController.startTimer();
-    }else{
-      if(mounted){
-        showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong");
-      }
-    }
-  }
+  // Future<void> _resendVerifyEmailAddress()async {
+  //   final bool isSuccess = await _emailVController.verifyEmail(widget.email);
+  //   if(isSuccess){
+  //     _timerController.startTimer();
+  //   }else{
+  //     if(mounted){
+  //       showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong");
+  //     }
+  //   }
+  // }
 
   @override
   void dispose() {
