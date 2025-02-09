@@ -3,18 +3,27 @@ import 'package:get/get.dart';
 
 import '../../../../application/urls.dart';
 
-class EmailVerificationController extends GetxController{
+class SignInController extends GetxController{
   bool _inProgress = false;
   bool get inProgress=>_inProgress;
 
   String? _errorMessage;
   String? get errorMessage =>_errorMessage;
 
-  Future<bool> verifyEmail(String email) async{
+  Future<bool> signIn(String userEmail, String userPassword) async{
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.verifyEmailUrl(email));
+
+    Map<String, dynamic> body = {
+    "email": userEmail,
+    "password": userPassword,
+    };
+
+    final NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
+        Urls.signInUrl,
+        body: body,
+    );
     if(response.isSuccess){
       isSuccess = true;
       _errorMessage = null;

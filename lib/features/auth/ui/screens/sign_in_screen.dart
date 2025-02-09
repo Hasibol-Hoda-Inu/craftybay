@@ -1,4 +1,4 @@
-import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
+import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
@@ -8,19 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-class EmailVerificationScreen extends StatefulWidget {
+class SignInScreen extends StatefulWidget {
   static const String name = "/EmailVerificationScreen";
-  const EmailVerificationScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
-  State<EmailVerificationScreen> createState() => _EmailVerificationScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  final EmailVerificationController _emailVController = Get.find<EmailVerificationController>();
+  final SignInController _emailVController = Get.find<SignInController>();
+
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +58,24 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                           hintText: 'Email address'
                         ),
                       ),
+                      const SizedBox(height: 10,),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return "Enter a your password";
+                          }
+                          return null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: const InputDecoration(
+                          hintText: 'Email address'
+                        ),
+                      ),
               ],)),
               const SizedBox(height: 24,),
-              GetBuilder<EmailVerificationController>(
+              GetBuilder<SignInController>(
                 builder: (controller) {
                   if(controller.inProgress){
                    return const CenteredCircularProgressIndicator();
@@ -84,7 +101,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
 Future<void> _getVerifyEmailAddress()async {
-  final bool isSuccess = await _emailVController.verifyEmail(_emailTEController.text.trim());
+  final bool isSuccess = await _emailVController.signIn(
+      _emailTEController.text.trim(),
+      _passwordController.text
+  );
   if(isSuccess){
     if(mounted){
       Navigator.pushReplacementNamed(context, OtpVerificationScreen.name, arguments: _emailTEController.text.trim(),);

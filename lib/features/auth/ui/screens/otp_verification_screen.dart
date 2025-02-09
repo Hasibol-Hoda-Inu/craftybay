@@ -1,5 +1,5 @@
 import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/features/auth/ui/controllers/email_verification_controller.dart';
+import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/otp_verification_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/complete_profile_screen.dart';
 import 'package:craftybay/features/auth/ui/controllers/timer_controller.dart';
@@ -30,7 +30,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   final TimerController _timerController = Get.find<TimerController>();
   final OtpVerificationController _otpVController = Get.find<OtpVerificationController>();
-  final EmailVerificationController _emailVController = Get.find<EmailVerificationController>();
+  final SignInController _emailVController = Get.find<SignInController>();
 
   @override
   void initState() {
