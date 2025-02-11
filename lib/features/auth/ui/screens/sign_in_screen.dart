@@ -1,5 +1,4 @@
 import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
-import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
@@ -16,6 +15,7 @@ class SignInScreen extends StatefulWidget {
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
+
 
 class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
