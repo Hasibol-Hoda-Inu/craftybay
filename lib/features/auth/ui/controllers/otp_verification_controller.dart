@@ -1,10 +1,8 @@
-import 'package:craftybay/features/auth/data/models/profile_model.dart';
-import 'package:craftybay/features/auth/ui/controllers/create_profile_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../../../../application/urls.dart';
 import 'read_profile_controller.dart';
@@ -47,8 +45,8 @@ class OtpVerificationController extends GetxController{
       _shouldNavigateCompleteProfile = true;
     }else{
       ///TODO: save token using shared preferences
-      await Get.find<AuthController>().saveUserData(token, Get.find<ReadProfileController>().profileModel!);
-      _shouldNavigateCompleteProfile = false;
+      // await Get.find<AuthController>().saveUserData(token, Get.find<ReadProfileController>().profileModel!);
+      // _shouldNavigateCompleteProfile = false;
     }
   }else{
     isSuccess = false;

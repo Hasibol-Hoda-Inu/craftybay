@@ -1,7 +1,10 @@
+import 'package:craftybay/features/auth/data/models/sign_in_model.dart';
 import 'package:craftybay/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 
 import '../../../../application/urls.dart';
+import '../../../common/ui/controllers/auth_controller.dart';
+import 'read_profile_controller.dart';
 
 class SignInController extends GetxController{
   bool _inProgress = false;
@@ -25,6 +28,10 @@ class SignInController extends GetxController{
         body: body,
     );
     if(response.isSuccess){
+      SignInModel signInModel = SignInModel.fromJson(response.responseData);
+      await Get.find<AuthController>().saveUserData(signInModel.data!.token!,
+          signInModel.data!.user!,
+      );
       isSuccess = true;
       _errorMessage = null;
     }else{
