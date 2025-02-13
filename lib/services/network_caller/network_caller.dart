@@ -34,7 +34,7 @@ class NetworkCaller {
       _logResponse(url: url, statusCode: response.statusCode, headers: response.headers, body: response.body);
 
       final decodedData = jsonDecode(response.body);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 200) {
         return NetworkResponse(isSuccess: true, statusCode: response.statusCode, responseData: decodedData);
       } else {
         return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: decodedData["data"]);
@@ -62,7 +62,7 @@ class NetworkCaller {
       _logResponse(url: url, statusCode: response.statusCode, headers: response.headers, body: response.body);
 
       final decodedData = jsonDecode(response.body);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(isSuccess: true, statusCode: response.statusCode, responseData: decodedData);
       } else {
         return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: decodedData["data"]);

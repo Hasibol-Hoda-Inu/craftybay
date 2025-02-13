@@ -1,4 +1,5 @@
 import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
+import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _goToEmailVerificationScreen()async {
     await Future.delayed(const Duration(seconds: 2));
     if(mounted){
-      Navigator.pushReplacementNamed(context, MainBottomNavScreen.name);
+      Navigator.pushReplacementNamed(context, SignUpScreen.name);
       // Navigator.pushReplacementNamed(context, SignInScreen.name);
     }
   }

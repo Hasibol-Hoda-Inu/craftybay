@@ -1,7 +1,7 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/otp_verification_controller.dart';
-import 'package:craftybay/features/auth/ui/screens/complete_profile_screen.dart';
+import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/auth/ui/controllers/timer_controller.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
@@ -152,7 +152,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       _timerController.startTimer();
       if(_otpVController.shouldNavigateCompleteProfile){
         if(mounted){
-          Navigator.pushNamed(context, CompleteProfileScreen.name);
+          Navigator.pushNamed(context, SignUpScreen.name);
         }
       }else{
         if(mounted){
