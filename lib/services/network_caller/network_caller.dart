@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:craftybay/features/common/data/models/error_response_model.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
@@ -65,7 +66,8 @@ class NetworkCaller {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(isSuccess: true, statusCode: response.statusCode, responseData: decodedData);
       } else {
-        return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: decodedData["data"]);
+        ErrorResponseModel errorResponseModel = ErrorResponseModel.fromJson(decodedData);
+        return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: errorResponseModel.msg);
       }
     }catch(e){
       _logResponse(url: url, errorMessage: e.toString());

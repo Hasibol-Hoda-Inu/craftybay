@@ -45,249 +45,252 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 24,),
-              const AppLogoWidget(),
-              const SizedBox(height: 24,),
-              Text("Complete Profile", style: Theme.of(context).textTheme.titleLarge ,),
-              Text("Get started with us with your details", style: Theme.of(context).textTheme.bodyLarge,),
-              const SizedBox(height: 24,),
-              Form(
-                  key: _formKey,
-                  child: Column(
-                    spacing: 24,
-                    children: [
-                      TextFormField(
-                        controller: _firstNameTEController,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter your first name";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                            hintText: 'First name'
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 24,),
+                const AppLogoWidget(),
+                const SizedBox(height: 24,),
+                Text("Complete Profile", style: Theme.of(context).textTheme.titleLarge ,),
+                Text("Get started with us with your details", style: Theme.of(context).textTheme.bodyLarge,),
+                const SizedBox(height: 24,),
+                Form(
+                    key: _formKey,
+                    child: Column(
+                      spacing: 24,
+                      children: [
+                        TextFormField(
+                          controller: _firstNameTEController,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter your first name";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                              hintText: 'First name'
+                          ),
                         ),
-                      ),
-                      TextFormField(
-                        controller: _lastNameTEController,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter your last name";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                            hintText: 'Last name'
+                        TextFormField(
+                          controller: _lastNameTEController,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter your last name";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                              hintText: 'Last name'
+                          ),
                         ),
-                      ),
-                      TextFormField(
-                        controller: _cityTEController,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter your email";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                            hintText: 'Email'
+                        TextFormField(
+                          controller: _cityTEController,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter your email";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                              hintText: 'Email'
+                          ),
                         ),
-                      ),
-                      TextFormField(
-                        controller: _passwordTEController,
-                        validator: (value){
-                          if((value == null || value.isEmpty) || value.length < 6){
-                            return "Enter a password min 6 characters";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                            hintText: 'Password'
+                        TextFormField(
+                          controller: _passwordTEController,
+                          validator: (value){
+                            if((value == null || value.isEmpty) || value.length < 6){
+                              return "Enter a password min 6 characters";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                              hintText: 'Password'
+                          ),
                         ),
-                      ),
-                      TextFormField(
-                        controller: _mobileTEController,
-                        keyboardType: TextInputType.phone,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter your mobile number";
-                          }else if(!value.isValidBangladeshiMobile()){
-                            return "Enter a valid mobile number";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                            hintText: 'NO.'
+                        TextFormField(
+                          controller: _mobileTEController,
+                          keyboardType: TextInputType.phone,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter your mobile number";
+                            }else if(!value.isValidBangladeshiMobile()){
+                              return "Enter a valid mobile number";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                              hintText: 'NO.'
+                          ),
                         ),
-                      ),
-                      TextFormField(
-                        controller: _cityTEController,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter your city";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                            hintText: 'City'
+                        TextFormField(
+                          controller: _cityTEController,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter your city";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                              hintText: 'City'
+                          ),
                         ),
-                      ),
-                      // TextFormField(
-                      //   keyboardType: TextInputType.phone,
-                      //   controller: _mobileTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your BD mobile number";
-                      //     }else if(!value.isValidBangladeshiMobile()){
-                      //       return "Enter your mobile number";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Mobile'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   keyboardType: TextInputType.phone,
-                      //   controller: _faxTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your fax number";
-                      //     }else if(!value.isValidBangladeshiMobile()){
-                      //       return "Enter your fax number";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Fax'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: _shippingNameTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your Shipping Name";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping Name'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: _shippingAddressTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your Shipping Address";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping Address'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: _shippingCityTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your Shipping City";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping City'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: _shippingStateTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your Shipping State";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping State'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: _shippingPostCodeTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your Shipping PostCode";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping PostCode'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: _shippingCountryTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your Shipping Country";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping Country'
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   keyboardType: TextInputType.phone,
-                      //   controller: _shippingMobileTEController,
-                      //   validator: (value){
-                      //     if(value == null || value.isEmpty){
-                      //       return "Enter your BD shipping phone number";
-                      //     }else if(!value.isValidBangladeshiMobile()){
-                      //       return "Enter your shipping mobile number";
-                      //     }
-                      //     return null;
-                      //   },
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   decoration: const InputDecoration(
-                      //       hintText: 'Shipping Mobile No.'
-                      //   ),
-                      // ),
-                    ],)),
-              const SizedBox(height: 24,),
-              GetBuilder<SignUpController>(
-                builder: (controller) {
-                  if(controller.inProgress){
-                    return const CenteredCircularProgressIndicator();
+                        // TextFormField(
+                        //   keyboardType: TextInputType.phone,
+                        //   controller: _mobileTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your BD mobile number";
+                        //     }else if(!value.isValidBangladeshiMobile()){
+                        //       return "Enter your mobile number";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Mobile'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   keyboardType: TextInputType.phone,
+                        //   controller: _faxTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your fax number";
+                        //     }else if(!value.isValidBangladeshiMobile()){
+                        //       return "Enter your fax number";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Fax'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   controller: _shippingNameTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your Shipping Name";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping Name'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   controller: _shippingAddressTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your Shipping Address";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping Address'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   controller: _shippingCityTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your Shipping City";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping City'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   controller: _shippingStateTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your Shipping State";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping State'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   controller: _shippingPostCodeTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your Shipping PostCode";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping PostCode'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   controller: _shippingCountryTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your Shipping Country";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping Country'
+                        //   ),
+                        // ),
+                        // TextFormField(
+                        //   keyboardType: TextInputType.phone,
+                        //   controller: _shippingMobileTEController,
+                        //   validator: (value){
+                        //     if(value == null || value.isEmpty){
+                        //       return "Enter your BD shipping phone number";
+                        //     }else if(!value.isValidBangladeshiMobile()){
+                        //       return "Enter your shipping mobile number";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   decoration: const InputDecoration(
+                        //       hintText: 'Shipping Mobile No.'
+                        //   ),
+                        // ),
+                      ],)),
+                const SizedBox(height: 24,),
+                GetBuilder<SignUpController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                      return const CenteredCircularProgressIndicator();
+                    }
+                    return ElevatedButton(
+                        onPressed: (){
+                          _onTapNextScreen();
+                        },
+                        child: const Text("Complete"),
+                    );
                   }
-                  return ElevatedButton(
-                      onPressed: (){
-                        _onTapNextScreen();
-                      },
-                      child: const Text("Complete"),
-                  );
-                }
-              ),
-              const SizedBox(height: 24,),
-            ],
+                ),
+                const SizedBox(height: 24,),
+              ],
+            ),
           ),
         ),
       ),
