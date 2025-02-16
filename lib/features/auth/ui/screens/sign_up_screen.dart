@@ -1,7 +1,6 @@
 import 'package:craftybay/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
-import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
