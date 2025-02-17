@@ -17,8 +17,10 @@ class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({
     super.key,
     required this.email,
+    required this.password,
   });
   final String email;
+  final String password;
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -51,12 +53,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               const AppLogoWidget(),
               const SizedBox(height: 36,),
               Text("Enter OTP Code", style: Theme.of(context).textTheme.titleLarge ,),
-              Text("A 6 digit OTP code has been sent", style: Theme.of(context).textTheme.bodyLarge,),
+              Text("A 4 digit OTP code has been sent", style: Theme.of(context).textTheme.bodyLarge,),
               const SizedBox(height: 24,),
               Form(
                 key: _formKey,
                 child: PinCodeTextField(
-                  length: 6,
+                  length: 4,
                   obscureText: false,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
@@ -76,7 +78,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   enableActiveFill: true,
                   controller: _otpTEController,
                   validator: (String? value){
-                    if(value?.length !=6){
+                    if(value?.length !=4){
                       return "Enter your otp";
                     }
                     return null;
@@ -127,7 +129,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     child: TextButton(
                       onPressed: (){
                         ///TODO: email send krr api call hbe
-                        // _resendVerifyEmailAddress();
+                        _resendVerifyEmailAddress();
                       },
                       child: const Text("Resend code"),
                      ),
@@ -150,14 +152,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     final bool isSuccess = await _otpVController.verifyOtp(widget.email, _otpTEController.text);
     if(isSuccess){
       _timerController.startTimer();
-      if(_otpVController.shouldNavigateCompleteProfile){
-        if(mounted){
-          Navigator.pushNamed(context, SignUpScreen.name);
-        }
-      }else{
-        if(mounted){
-          Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (predicate)=>false);
-        }
+      if(mounted){
+        Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (predicate)=>false);
       }
     }else{
       if(mounted){
@@ -166,16 +162,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     }
   }
 
-  // Future<void> _resendVerifyEmailAddress()async {
-  //   final bool isSuccess = await _emailVController.verifyEmail(widget.email);
-  //   if(isSuccess){
-  //     _timerController.startTimer();
-  //   }else{
-  //     if(mounted){
-  //       showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong");
-  //     }
-  //   }
-  // }
+  Future<void> _resendVerifyEmailAddress()async {
+    final bool isSuccess = await _emailVController.signIn(widget.email, widget.password);
+    if(isSuccess){
+      _timerController.startTimer();
+    }else{
+      if(mounted){
+        showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong");
+      }
+    }
+  }
 
   @override
   void dispose() {

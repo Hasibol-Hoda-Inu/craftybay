@@ -35,8 +35,8 @@ class CraftyBay extends StatelessWidget {
         }else if(settings.name == SignInScreen.name){
           widget = const SignInScreen();
         }else if (settings.name == OtpVerificationScreen.name){
-          String userEmail = settings.arguments as String;
-          widget = OtpVerificationScreen(email: userEmail,);
+          Map<String, dynamic> loginInfo = settings.arguments as Map<String, dynamic>;
+          widget = OtpVerificationScreen(email: loginInfo["email"], password: loginInfo["password"],);
         }else if(settings.name == SignUpScreen.name){
           widget = const SignUpScreen();
         }else if(settings.name == MainBottomNavScreen.name){

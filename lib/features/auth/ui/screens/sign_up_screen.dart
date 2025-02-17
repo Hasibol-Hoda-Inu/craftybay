@@ -330,9 +330,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if(isSuccess){
       if(mounted){
         Navigator.pushNamedAndRemoveUntil(
-            context,
-            OtpVerificationScreen.name,
-            arguments: _emailTEController.text.trim(),
+            context, OtpVerificationScreen.name,
+            arguments: {
+              "email": _emailTEController.text.trim(),
+              "password": _passwordTEController.text
+            },
                 (predicate)=>false
         );
       }
