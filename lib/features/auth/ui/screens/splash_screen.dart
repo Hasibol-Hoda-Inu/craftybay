@@ -25,8 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _goToEmailVerificationScreen()async {
     await Future.delayed(const Duration(seconds: 2));
     if(mounted){
-      Navigator.pushReplacementNamed(context, SignUpScreen.name);
+      // Navigator.pushReplacementNamed(context, SignUpScreen.name);
       // Navigator.pushReplacementNamed(context, SignInScreen.name);
+      Navigator.pushReplacementNamed(context, MainBottomNavScreen.name);
     }
   }
 
