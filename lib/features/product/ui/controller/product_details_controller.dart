@@ -1,5 +1,4 @@
-import 'package:craftybay/features/home/data/models/banner_list_model.dart';
-import 'package:craftybay/features/home/data/models/banner_model.dart';
+
 import 'package:craftybay/features/product/data/models/product_details_model.dart';
 import 'package:craftybay/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';

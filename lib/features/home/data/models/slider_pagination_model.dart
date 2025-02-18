@@ -1,3 +1,5 @@
+
+
 import 'slider_list_data_model.dart';
 
 class SliderPaginationModel {
@@ -12,7 +14,9 @@ class SliderPaginationModel {
     code = json['code'];
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ? SliderListDataModel.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? SliderListDataModel.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -26,7 +30,3 @@ class SliderPaginationModel {
     return data;
   }
 }
-
-
-
-

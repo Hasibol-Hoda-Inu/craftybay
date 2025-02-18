@@ -1,10 +1,9 @@
-import 'package:craftybay/features/home/data/models/slider_list_data_model.dart';
 import 'package:craftybay/features/home/data/models/slider_model.dart';
-import 'package:craftybay/features/home/data/models/slider_pagination_model.dart';
 import 'package:craftybay/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 
 import '../../../../application/urls.dart';
+import '../../data/models/slider_pagination_model.dart';
 
 class SliderListController extends GetxController{
   
