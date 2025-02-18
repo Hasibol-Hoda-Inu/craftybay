@@ -13,7 +13,7 @@ import 'package:craftybay/features/product/ui/controller/product_details_control
 import 'package:get/get.dart';
 
 import '../features/auth/ui/controllers/sign_up_controller.dart';
-import '../features/home/ui/controller/home_banner_list_controller.dart';
+import '../features/home/ui/controller/slider_list_controller.dart';
 import '../services/network_caller/network_caller.dart';
 
 class ControllerBinder extends Bindings{
@@ -27,7 +27,7 @@ class ControllerBinder extends Bindings{
     Get.put(ReadProfileController());
     Get.put(AuthController());
     Get.put(SignUpController());
-    Get.put(HomeBannerListController());
+    Get.put(SliderListController());
     Get.put(CategoryListController());
     Get.put(ProductListByNewController());
     Get.put(ProductListBySpecialController());

@@ -1,11 +1,12 @@
-import 'package:craftybay/features/home/data/models/banner_list_model.dart';
-import 'package:craftybay/features/home/data/models/banner_model.dart';
+import 'package:craftybay/features/home/data/models/slider_list_data_model.dart';
+import 'package:craftybay/features/home/data/models/slider_model.dart';
+import 'package:craftybay/features/home/data/models/slider_pagination_model.dart';
 import 'package:craftybay/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 
 import '../../../../application/urls.dart';
 
-class HomeBannerListController extends GetxController{
+class SliderListController extends GetxController{
   
   bool _inProgress = false;
   bool get inProgress => _inProgress;
@@ -13,8 +14,8 @@ class HomeBannerListController extends GetxController{
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  BannerListModel? _bannerListModel;
-  List<BannerModel> get bannerList => _bannerListModel?.bannerList ?? [];
+  SliderPaginationModel? _sliderPaginationModelModel;
+  List<SliderModel> get sliderList => _sliderPaginationModelModel?.data?.results ?? [];
   
   Future<bool> getBannerSliders()async{
     bool isSuccess = false;
@@ -24,7 +25,7 @@ class HomeBannerListController extends GetxController{
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.homeBannerSliders);
     if(response.isSuccess){
     isSuccess = true;
-    _bannerListModel = BannerListModel.fromJson(response.responseData);
+    _sliderPaginationModelModel = SliderPaginationModel.fromJson(response.responseData);
     _errorMessage = null;
     }else{
       isSuccess = false;

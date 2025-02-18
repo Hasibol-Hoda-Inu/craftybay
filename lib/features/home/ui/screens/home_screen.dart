@@ -2,7 +2,7 @@ import 'package:craftybay/features/common/data/models/category_model.dart';
 import 'package:craftybay/features/common/data/models/product_model.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
-import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/slider_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/new_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/special_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/widgets/category_list_shimmer_loading.dart';
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: _buildAppBar(),
       body: RefreshIndicator(
         onRefresh: ()async{
-          Get.find<HomeBannerListController>().getBannerSliders();
+          Get.find<SliderListController>().getBannerSliders();
           Get.find<CategoryListController>().getCategoryList();
           Get.find<ProductListByPopularController>().getPopularProductList();
           Get.find<ProductListBySpecialController>().getSpecialProductList();
@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SearchBoxWidget(controller: sbController,),
                 const SizedBox(height: 16,),
-                GetBuilder<HomeBannerListController>(
+                GetBuilder<SliderListController>(
                   builder: (controller) {
                     if(controller.inProgress){
                       return const BannerShimmerLoading();
                     }
-                    return HomeCarouselSliderWidget(bannerList: controller.bannerList,);
+                    return HomeCarouselSliderWidget(sliderList: controller.sliderList,);
                   }
                 ),
                 const SizedBox(height: 16,),

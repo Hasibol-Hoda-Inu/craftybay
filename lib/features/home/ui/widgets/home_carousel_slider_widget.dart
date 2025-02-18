@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/features/home/data/models/banner_model.dart';
+import 'package:craftybay/features/home/data/models/slider_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeCarouselSliderWidget extends StatefulWidget {
   const HomeCarouselSliderWidget({
     super.key,
-    required this.bannerList,
+    required this.sliderList,
   });
-  final List<BannerModel> bannerList;
+  final List<SliderModel> sliderList;
   @override
   State<HomeCarouselSliderWidget> createState() => _HomeCarouselSliderWidgetState();
 }
@@ -28,7 +28,7 @@ class _HomeCarouselSliderWidgetState extends State<HomeCarouselSliderWidget> {
               _valueNotifier.value = currentIndex;
             }
           ),
-          items: widget.bannerList.map((banner) {
+          items: widget.sliderList.map((banner) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -36,7 +36,7 @@ class _HomeCarouselSliderWidgetState extends State<HomeCarouselSliderWidget> {
                     decoration: BoxDecoration(
                         color: AppColors.themeColor,
                         borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(image: NetworkImage(banner.image ?? ""), fit: BoxFit.cover),
+                      image: DecorationImage(image: NetworkImage(banner.photoUrl ?? ""), fit: BoxFit.cover),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -45,7 +45,7 @@ class _HomeCarouselSliderWidgetState extends State<HomeCarouselSliderWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(banner.title ?? "", style: const TextStyle(
+                          Text(banner.description ?? "", style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
                           ),),
@@ -70,7 +70,7 @@ class _HomeCarouselSliderWidgetState extends State<HomeCarouselSliderWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 6,
                 children: [
-                  for(int i = 0; i< widget.bannerList.length; i++)
+                  for(int i = 0; i< widget.sliderList.length; i++)
                     CircleAvatar(
                       radius: 6,
                       backgroundColor: value==i? AppColors.themeColor : Colors.grey.shade300,

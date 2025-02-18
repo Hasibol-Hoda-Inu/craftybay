@@ -1,6 +1,6 @@
 import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
-import 'package:craftybay/features/home/ui/controller/home_banner_list_controller.dart';
+import 'package:craftybay/features/home/ui/controller/slider_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/new_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/popular_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/special_product_list_controller.dart';
@@ -32,7 +32,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<HomeBannerListController>().getBannerSliders();
+    Get.find<SliderListController>().getBannerSliders();
     Get.find<CategoryListController>().getCategoryList();
     Get.find<ProductListByNewController>().getNewProductList();
     Get.find<ProductListBySpecialController>().getSpecialProductList();
