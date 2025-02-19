@@ -1,4 +1,5 @@
 import 'package:craftybay/features/common/data/models/category_model.dart';
+import 'package:craftybay/features/common/data/models/category_pagination_model/category_pagination_model.dart';
 import 'package:craftybay/features/common/data/models/product_model.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
@@ -160,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.pushNamed(context, ProductListByRemarksScreen.name, arguments: categoryName);
   }
 
-  List<Widget> _getCategoryList(List<CategoryModel> categoryModel){
+  List<Widget> _getCategoryList(List<CategoryItemModel> categoryModel){
     List<Widget> categoryList = [];
     for(int i=0; i<categoryModel.length; i++){
       categoryList.add(CategoryIconWidget(categoryModel: categoryModel[i],));

@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../features/auth/ui/screens/splash_screen.dart';
-import '../features/common/data/models/product_model.dart';
 
 class CraftyBay extends StatelessWidget {
   const CraftyBay({super.key});

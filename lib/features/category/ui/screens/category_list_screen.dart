@@ -2,6 +2,7 @@ import 'package:craftybay/features/common/ui/controllers/category_list_controlle
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/category_icon_widget.dart';
 import 'package:craftybay/features/home/ui/widgets/banner_shimmer_loading.dart';
+import 'package:craftybay/features/home/ui/widgets/category_list_shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,19 +35,25 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 height: 2,
                 color: Colors.grey.shade200,)),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: GetBuilder<CategoryListController>(
-            builder: (controller) {
-              if(controller.inProgress){
-                return const BannerShimmerLoading();
+        body: RefreshIndicator(
+          onRefresh: () async{
+            Get.find<CategoryListController>().getCategoryList();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GetBuilder<CategoryListController>(
+              builder: (controller) {
+                if(controller.inProgress){
+                  return const CategoryListShimmerLoading();
+                }
+                return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                    itemBuilder: (BuildContext context, index)=>
+                        CategoryIconWidget(categoryModel: controller.categoryList[index],),
+                  itemCount: controller.categoryList.length,
+                );
               }
-              return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-                  itemBuilder: (BuildContext context, index)=> CategoryIconWidget(categoryModel: controller.categoryList[index],),
-                itemCount: controller.categoryList.length,
-              );
-            }
+            ),
           ),
         ),
       ),
