@@ -19,7 +19,7 @@ class CategoryIconWidget extends StatelessWidget {
         Navigator.pushNamed(context, ProductListByCategoryScreen.name,
             arguments:{
              "categoryName":categoryModel.title,
-              "categoryId": categoryModel.sId
+              "categoryId": categoryModel.iV
             },
         );
       },
