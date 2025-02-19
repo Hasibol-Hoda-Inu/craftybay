@@ -1,7 +1,6 @@
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/category_icon_widget.dart';
-import 'package:craftybay/features/home/ui/widgets/banner_shimmer_loading.dart';
 import 'package:craftybay/features/home/ui/widgets/category_list_shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +17,21 @@ class CategoryListScreen extends StatefulWidget {
 }
 
 class _CategoryListScreenState extends State<CategoryListScreen> {
+  final CategoryListController _categoryLController = Get.find<CategoryListController>();
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_loadMoreData);
+  }
+
+  void _loadMoreData(){
+    if(_scrollController.position.extentAfter < 300){
+      _categoryLController.getCategoryList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -39,21 +53,34 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           onRefresh: () async{
             Get.find<CategoryListController>().getCategoryList();
           },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GetBuilder<CategoryListController>(
-              builder: (controller) {
-                if(controller.inProgress){
-                  return const CategoryListShimmerLoading();
-                }
-                return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-                    itemBuilder: (BuildContext context, index)=>
-                        CategoryIconWidget(categoryModel: controller.categoryList[index],),
-                  itemCount: controller.categoryList.length,
+          child: GetBuilder<CategoryListController>(
+            builder: (controller) {
+              if(controller.initialInProgress){
+                return const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CategoryListShimmerLoading(),
                 );
               }
-            ),
+              return Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: GridView.builder(
+                        controller: _scrollController,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                          itemBuilder: (BuildContext context, index)=>
+                              CategoryIconWidget(categoryModel: controller.categoryList[index],),
+                        itemCount: controller.categoryList.length,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                      visible: controller.inProgress,
+                      child: const LinearProgressIndicator())
+                ],
+              );
+            }
           ),
         ),
       ),
@@ -62,5 +89,10 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   void _onPop(){
     Get.find<MainBottomNavController>().backToHome();
+  }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }
