@@ -39,6 +39,7 @@ class CategoryListController extends GetxController{
     if(response.isSuccess){
       isSuccess = true;
       _errorMessage = null;
+
       CategoryPaginationModel paginationModel = CategoryPaginationModel.fromJson(response.responseData);
       _categoryList.addAll(paginationModel.data?.results ?? []);
 

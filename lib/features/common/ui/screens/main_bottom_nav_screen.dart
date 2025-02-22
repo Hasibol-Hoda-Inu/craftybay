@@ -34,9 +34,9 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     super.initState();
     Get.find<SliderListController>().getBannerSliders();
     Get.find<CategoryListController>().getCategoryList();
-    Get.find<ProductListByNewController>().getNewProductList();
-    Get.find<ProductListBySpecialController>().getSpecialProductList();
     Get.find<ProductListByPopularController>().getPopularProductList();
+    Get.find<ProductListBySpecialController>().getSpecialProductList();
+    Get.find<ProductListByNewController>().getNewProductList();
   }
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:craftybay/features/common/data/models/product_model.dart';
+import 'package:craftybay/features/common/data/models/product_pagination_model/product_pagination_model.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +10,12 @@ class ProductCardWidget extends StatelessWidget {
     required this.productModel,
   });
 
-  final ProductModel productModel;
+  final ProductItemModel productModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ProductDetailsScreen.name, arguments: productModel.id);
+        Navigator.pushNamed(context, ProductDetailsScreen.name, arguments: productModel.sId);
       },
       child: SizedBox(
         width: 150,
@@ -34,7 +34,7 @@ class ProductCardWidget extends StatelessWidget {
                         topRight: Radius.circular(8)
                     )
                 ),
-                child: Image.network(productModel.image ?? "https://fastly.picsum.photos/id/21/3008/2008.jpg?hmac=T8DSVNvP-QldCew7WD4jj_S3mWwxZPqdF0CNPksSko4",
+                child: Image.network(productModel.brand?.icon ?? "https://fastly.picsum.photos/id/21/3008/2008.jpg?hmac=T8DSVNvP-QldCew7WD4jj_S3mWwxZPqdF0CNPksSko4",
                   fit: BoxFit.cover,
                   width: 150,
                   height: 100,
@@ -56,14 +56,14 @@ class ProductCardWidget extends StatelessWidget {
                     Wrap(
                       spacing: 6,
                       children: [
-                        Text("\$${productModel.price ?? ""}", style: const TextStyle(
+                        Text("\$${productModel.currentPrice ?? ""}", style: const TextStyle(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.w700,
                         ),),
                          Wrap(
                            children: [
                              const Icon(Icons.star_rounded, color: Colors.amber, size: 18,),
-                             Text("${productModel.star ?? ""}"),
+                             Text("${productModel.quantity ?? ""}"),
                           ],
                         ),
                         Container(

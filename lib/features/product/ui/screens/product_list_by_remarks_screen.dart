@@ -1,4 +1,4 @@
-import 'package:craftybay/features/common/data/models/product_model.dart';
+import 'package:craftybay/features/common/data/models/product_pagination_model/product_pagination_model.dart';
 import 'package:craftybay/features/home/ui/widgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +9,7 @@ class ProductListByRemarksScreen extends StatefulWidget {
     required this.productList,
     required this.remark,
   });
-  final List<ProductModel> productList;
+  final List<ProductItemModel> productList;
   final String remark;
   @override
   State<ProductListByRemarksScreen> createState() => _ProductListByRemarksScreenState();

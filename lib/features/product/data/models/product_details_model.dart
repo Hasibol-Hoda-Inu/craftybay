@@ -1,4 +1,6 @@
-import 'package:craftybay/features/common/data/models/product_model.dart';
+
+
+import 'package:craftybay/features/common/data/models/product_pagination_model/product_pagination_model.dart';
 
 class ProductDetailsModel {
   String? msg;
@@ -29,7 +31,7 @@ class ProductDetails {
   int? productId;
   String? createdAt;
   String? updatedAt;
-  ProductModel? product;
+  ProductItemModel? product;
 
   ProductDetails(
       {this.id,
@@ -58,7 +60,7 @@ class ProductDetails {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     product =
-    json['product'] != null ? ProductModel.fromJson(json['product']) : null;
+    json['product'] != null ? ProductItemModel.fromJson(json['product']) : null;
   }
 }
 

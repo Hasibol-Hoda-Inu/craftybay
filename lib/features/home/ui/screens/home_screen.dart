@@ -1,6 +1,5 @@
-import 'package:craftybay/features/common/data/models/category_model.dart';
 import 'package:craftybay/features/common/data/models/category_pagination_model/category_pagination_model.dart';
-import 'package:craftybay/features/common/data/models/product_model.dart';
+import 'package:craftybay/features/common/data/models/product_pagination_model/product_pagination_model.dart';
 import 'package:craftybay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:craftybay/features/home/ui/controller/slider_list_controller.dart';
@@ -115,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 8,),
                 GetBuilder<ProductListBySpecialController>(
                   builder: (controller) {
-                    if(controller.inProgress){
+                    if(controller.initialInProgress){
                       return const ProductListShimmerLoading();
                     }
                     return SingleChildScrollView(
@@ -137,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 8,),
                 GetBuilder<ProductListByNewController>(
                   builder: (controller) {
-                    if(controller.inProgress){
+                    if(controller.initialInProgress){
                       return const ProductListShimmerLoading();
                     }
                     return SingleChildScrollView(
@@ -169,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return categoryList;
   }
 
-  List<Widget> _getProductCardList(List<ProductModel> productList){
+  List<Widget> _getProductCardList(List<ProductItemModel> productList){
     List<Widget> productCardList = [];
     for(int i=0; i<productList.length; i++){
       productCardList.add(ProductCardWidget(productModel: productList[i],));

@@ -1,5 +1,4 @@
 import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/features/common/ui/widgets/product_list_shimmer_loading.dart';
 import 'package:craftybay/features/product/ui/controller/product_details_controller.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
 import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
@@ -123,7 +122,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ),
               ),
-              buildAddToCartContainer(context, controller.productDetails?.product?.price ?? "")
+              buildAddToCartContainer(context, controller.productDetails?.product?.currentPrice.toString() ?? "")
             ],
           );
         }
@@ -151,7 +150,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Price", style: TextTheme.of(context).titleMedium,),
-                  Text("\$$price", style: TextStyle(
+                  Text("\$$price", style: const TextStyle(
                     color: AppColors.themeColor,
                     fontSize: 22,
                     fontWeight: FontWeight.w700
