@@ -47,10 +47,16 @@ class ProductListByNewController extends GetxController{
     ProductPaginationModel paginationModel = ProductPaginationModel.fromJson(response.responseData);
     _productListModel.addAll(paginationModel.data?.results ?? []);
 
+    if(paginationModel.data?.lastPage != null){
+      _lastPage = paginationModel.data!.lastPage!;
+    }
+
     }else{
       isSuccess = false;
       _errorMessage = response.errorMessage;
     }
+
+    print("ami achi");
     _inProgress = false;
     update();
     return isSuccess;
