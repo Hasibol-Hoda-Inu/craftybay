@@ -20,12 +20,20 @@ class ProductDetailsController extends GetxController{
     }return null;
   }
 
-  Future<bool> getProductDetails(int id)async{
+  Future<bool> getProductDetails(String id)async{
     bool isSuccess = false;
     _inProgress = true;
     update();
 
-    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.productDetails(id));
+    Map<String, String> pathVariables = {
+      "product_id": id
+    };
+
+    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
+        Urls.productDetails,
+        pathVariables: pathVariables
+    );
+
     if(response.isSuccess){
       isSuccess = true;
       _productDetailsModel = ProductDetailsModel.fromJson(response.responseData);

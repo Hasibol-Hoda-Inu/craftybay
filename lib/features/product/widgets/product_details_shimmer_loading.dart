@@ -24,7 +24,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: double.maxFinite,
               height: 260,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -32,7 +32,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: 250,
               height: 30,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -40,7 +40,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: 120,
               height: 30,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -48,7 +48,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: 40,
               height: 30,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -56,7 +56,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: double.maxFinite,
               height: 60,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -64,7 +64,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: double.maxFinite,
               height: 60,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -72,7 +72,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: double.maxFinite,
               height: 180,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             ),
@@ -80,7 +80,7 @@ class _ProductDetailsShimmerLoadingState extends State<ProductDetailsShimmerLoad
               width: double.maxFinite,
               height: 40,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
             )

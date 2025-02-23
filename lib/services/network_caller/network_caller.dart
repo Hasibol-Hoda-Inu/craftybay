@@ -20,7 +20,7 @@ class NetworkResponse{
 
 class NetworkCaller {
   final Logger _logger = Logger();
-  Future<NetworkResponse> getRequest(String url, {Map<String, dynamic>? queryParams, String? accessToken}) async{
+  Future<NetworkResponse> getRequest(String url, {Map<String, dynamic>? queryParams, Map<String, String>?pathVariables, String? accessToken}) async{
     try{
       Map<String, String> headers = {
         "content-type": "application/json"
@@ -33,6 +33,12 @@ class NetworkCaller {
         url += "?";
         for (String param in queryParams.keys) {
           url += "$param=${queryParams[param]}&";
+        }
+      }
+      if(pathVariables != null) {
+        url += ":";
+        for (String variables in pathVariables.keys) {
+          url += variables;
         }
       }
 

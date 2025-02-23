@@ -1,11 +1,12 @@
 import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/features/product/ui/controller/product_details_controller.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
 import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
 import 'package:craftybay/features/product/widgets/size_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common/data/models/product_pagination_model/product_pagination_model.dart';
+import '../../../home/ui/controller/special_product_list_controller.dart';
 import '../../widgets/color_picker_widget.dart';
 import '../../widgets/product_details_shimmer_loading.dart';
 import '../../widgets/review_section_widget.dart';
@@ -14,9 +15,10 @@ class ProductDetailsScreen extends StatefulWidget {
   static const String name = "/product/product-details";
   const ProductDetailsScreen({
     super.key,
-    required this.productId,
+    required this.productList,
   });
-  final int productId;
+  final ProductItemModel productList;
+
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
@@ -40,7 +42,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+    Get.find<ProductListBySpecialController>().getSpecialProductList();
   }
 
   @override
@@ -57,7 +59,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               height: 2,
               color: Colors.grey.shade200,)),
       ),
-      body: GetBuilder<ProductDetailsController>(
+      body: GetBuilder<ProductListBySpecialController>(
         builder: (controller) {
           if(controller.inProgress){
             return const ProductDetailsShimmerLoading();
@@ -67,11 +69,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           }
           return Column(
             children: [
-              ProductImageCarouselSliderWidget(imageUrls: [
-                controller.productDetails?.img1 ?? "",
-                controller.productDetails?.img2 ?? "",
-                controller.productDetails?.img3 ?? "",
-              ],),
+              ProductImageCarouselSliderWidget(
+                imageUrls: widget.productList.photos ?? [],
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -91,7 +91,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(controller.productDetails?.product?.title ?? "",
+                                  Text(widget.productList.title ?? "",
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 22,
@@ -114,7 +114,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         const SizedBox(height: 16,),
                         Text("Description", style: TextTheme.of(context).titleMedium?.copyWith(fontSize: 20),),
                         const SizedBox(height: 8,),
-                        Text(controller.productDetails?.des ?? "",
+                        Text(widget.productList.description ?? "",
                           style: TextTheme.of(context).bodyLarge,
                         )
                       ],
@@ -122,7 +122,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ),
               ),
-              buildAddToCartContainer(context, controller.productDetails?.product?.currentPrice.toString() ?? "")
+              buildAddToCartContainer(context, widget.productList.currentPrice.toString())
             ],
           );
         }

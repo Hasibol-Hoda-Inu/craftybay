@@ -42,7 +42,8 @@ class _ProductListByRemarksScreenState extends State<ProductListByRemarksScreen>
             crossAxisCount: 3,
             mainAxisSpacing: 18,
           ),
-          itemBuilder: (BuildContext context, index)=> FittedBox(child:ProductCardWidget( productModel: widget.productList[index])),
+          itemBuilder: (BuildContext context, index)=> FittedBox(child:ProductCardWidget(
+              productModel: widget.productList[index])),
           itemCount: widget.productList.length,
 
         ),

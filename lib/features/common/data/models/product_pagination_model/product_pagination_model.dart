@@ -100,8 +100,6 @@ class ProductItemModel {
     slug = json['slug'];
     metaDescription = json['meta_description'];
     description = json['description'];
-
-    // photos = json['photos'];
     photos = json['photos'] != null
         ? List<String>.from(json['photos']!)
         : null;

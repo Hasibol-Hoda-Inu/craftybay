@@ -4,18 +4,28 @@ import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
 
-class ProductCardWidget extends StatelessWidget {
+class ProductCardWidget extends StatefulWidget {
   const ProductCardWidget({
     super.key,
     required this.productModel,
   });
 
   final ProductItemModel productModel;
+
+  @override
+  State<ProductCardWidget> createState() => _ProductCardWidgetState();
+}
+
+class _ProductCardWidgetState extends State<ProductCardWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ProductDetailsScreen.name, arguments: productModel.sId);
+        Navigator.pushNamed(context, ProductDetailsScreen.name,
+            arguments: {
+          "productList": widget.productModel
+            }
+        );
       },
       child: SizedBox(
         width: 150,
@@ -34,7 +44,7 @@ class ProductCardWidget extends StatelessWidget {
                         topRight: Radius.circular(8)
                     )
                 ),
-                child: Image.network(productModel.brand?.icon ?? "https://fastly.picsum.photos/id/21/3008/2008.jpg?hmac=T8DSVNvP-QldCew7WD4jj_S3mWwxZPqdF0CNPksSko4",
+                child: Image.network(widget.productModel.brand?.icon ?? "https://fastly.picsum.photos/id/21/3008/2008.jpg?hmac=T8DSVNvP-QldCew7WD4jj_S3mWwxZPqdF0CNPksSko4",
                   fit: BoxFit.cover,
                   width: 150,
                   height: 100,
@@ -45,7 +55,7 @@ class ProductCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(productModel.title ?? "",
+                    Text(widget.productModel.title ?? "",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -56,14 +66,14 @@ class ProductCardWidget extends StatelessWidget {
                     Wrap(
                       spacing: 6,
                       children: [
-                        Text("\$${productModel.currentPrice ?? ""}", style: const TextStyle(
+                        Text("\$${widget.productModel.currentPrice ?? ""}", style: const TextStyle(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.w700,
                         ),),
                          Wrap(
                            children: [
                              const Icon(Icons.star_rounded, color: Colors.amber, size: 18,),
-                             Text("${productModel.quantity ?? ""}"),
+                             Text("${widget.productModel.quantity ?? ""}"),
                           ],
                         ),
                         Container(
