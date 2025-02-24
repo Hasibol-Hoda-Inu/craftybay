@@ -126,11 +126,11 @@ Future<void> _getVerifyEmailAddress()async {
 }
 
   Future<void> _goToNextScreen()async {
-    await _auth.getToken();
     bool loggedIn = await _auth.isUserLoggedIn();
     if(loggedIn){
-      // await _auth.getUserData();
-      String token = _auth.accessToken.toString();
+      String token = _auth.accessToken!;
+      debugPrint("TOKEN: $token");
+
       final id = Get.find<ProductIdController>().productId;
       final bool result = await _addToCart.postAddToCart(id!, token);
       if(result && mounted){

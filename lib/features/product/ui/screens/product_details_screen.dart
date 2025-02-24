@@ -1,4 +1,5 @@
 import 'package:craftybay/application/app_colors.dart';
+import 'package:craftybay/features/auth/data/models/sign_in_model.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
@@ -166,18 +167,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     String productId = widget.productList.sId.toString(); // Your product ID
     Get.find<ProductIdController>().setProductId(productId);
 
-    await _auth.getToken();
     bool loggedIn = await _auth.isUserLoggedIn();
     if(loggedIn){
-      // await _auth.getUserData();
-      String token = _auth.accessToken.toString();
+      String token = _auth.accessToken!;
       debugPrint("TOKEN: $token");
-      debugPrint("Hola");
       final bool result = await _addToCart.postAddToCart(widget.productList.sId.toString(), token);
-      if(result){
-        if(mounted){
+      if(result && mounted){
           Navigator.pushNamed(context, CartScreen.name);
-        }
       }else{
         if(mounted){
           showSnackBarMessage(context, _addToCart.errorMessage ?? "Something went wrong, Please try again");

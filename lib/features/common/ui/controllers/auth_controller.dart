@@ -5,7 +5,7 @@ import '../../../auth/data/models/sign_in_model.dart';
 
 class AuthController {
   final String _accessTokenKey = "access-token";
-  final String _profileDataKey = "access-token";
+  final String _profileDataKey = "profile-data";
 
   String? accessToken;
   User? profileModel;
@@ -20,18 +20,25 @@ class AuthController {
   Future<void> getUserData() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     accessToken = sharedPreferences.getString(_accessTokenKey);
-    profileModel = User.fromJson(jsonDecode(sharedPreferences.getString(_profileDataKey)!));
+    final String? profileJson = sharedPreferences.getString(_profileDataKey);
+    if (profileJson != null) {
+      profileModel = User.fromJson(jsonDecode(profileJson));
+    } else {
+      // Handle missing profile data (e.g., log error)
+      print("Profile data not found in SharedPreferences");
+    }
+    // profileModel = User.fromJson(jsonDecode(sharedPreferences.getString(_profileDataKey)!));
   }
 
-  Future<void>saveToken(String token)async{
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString('accessToken', token);
-  }
-
-  Future<String?> getToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString('accessToken');
-  }
+  // Future<void>saveToken(String token)async{
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   await sharedPreferences.setString('accessToken', token);
+  // }
+  //
+  // Future<String?> getToken() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   return sharedPreferences.getString('accessToken');
+  // }
 
   Future<bool> isUserLoggedIn()async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

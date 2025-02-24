@@ -39,7 +39,7 @@ class OtpVerificationController extends GetxController{
       authSuccessModel.data!.user!,
     );
 
-    String? token = await Get.find<AuthController>().getToken();
+    String? token =  Get.find<AuthController>().accessToken;
     _logger.i("Token saved successfully: $token");
 
   }else{
