@@ -3,6 +3,7 @@ import 'package:craftybay/application/controller_binders.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
 import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
@@ -55,9 +56,12 @@ class CraftyBay extends StatelessWidget {
           Map<String, dynamic> productList = settings.arguments as Map<String, dynamic>;
           widget = ProductDetailsScreen(productList: productList["productList"]);
         }else if(settings.name == ReviewListScreen.name){
-          widget = const ReviewListScreen();
+          String id = settings.arguments as String;
+          widget = ReviewListScreen(productId: id,);
         }else if(settings.name == CreateReview.name){
           widget = const CreateReview();
+        }else if(settings.name == CartScreen.name){
+          widget = const CartScreen();
         }
 
         return MaterialPageRoute(builder: (context){

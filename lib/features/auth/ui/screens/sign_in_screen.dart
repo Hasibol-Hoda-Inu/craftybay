@@ -1,11 +1,17 @@
 import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:craftybay/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
-import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
+import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
+import 'package:craftybay/features/product/ui/controller/product_id_controller.dart';
+import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../common/ui/controllers/auth_controller.dart';
+import '../../../product/ui/controller/add_to_cart_controller.dart';
+import 'sign_up_screen.dart';
 
 
 class SignInScreen extends StatefulWidget {
@@ -16,13 +22,14 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-
 class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final SignInController _emailVController = Get.find<SignInController>();
+  final AuthController _auth = Get.find<AuthController>();
+  final AddToCartController _addToCart = Get.find<AddToCartController>();
 
 @override
   Widget build(BuildContext context) {
@@ -107,15 +114,38 @@ Future<void> _getVerifyEmailAddress()async {
       _passwordController.text
   );
   if(isSuccess){
-    if(mounted){
-      Navigator.pushReplacementNamed(context, MainBottomNavScreen.name, arguments: _emailTEController.text.trim(),);
-    }
+    _goToNextScreen();
+    // if(mounted){
+    //   Navigator.pushNamedAndRemoveUntil(context, CartScreen.name, (predicate)=>false);
+    // }
   }else{
     if(mounted){
       showSnackBarMessage(context, _emailVController.errorMessage ?? "Something went wrong. Please try again");
     }
   }
 }
+
+  Future<void> _goToNextScreen()async {
+    await _auth.getToken();
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      // await _auth.getUserData();
+      String token = _auth.accessToken.toString();
+      final id = Get.find<ProductIdController>().productId;
+      final bool result = await _addToCart.postAddToCart(id!, token);
+      if(result && mounted){
+        Navigator.pushNamed(context, CartScreen.name);
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _addToCart.errorMessage ?? "Something went wrong, Please try again");
+        }
+      }
+    }else{
+      if(mounted){
+        Navigator.pushNamedAndRemoveUntil (context, SignUpScreen.name, (predicate)=>false);
+      }
+    }
+  }
 
 
   @override

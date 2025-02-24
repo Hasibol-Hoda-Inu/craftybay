@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:craftybay/features/auth/data/models/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../auth/data/models/sign_in_model.dart';

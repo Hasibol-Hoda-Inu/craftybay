@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/review_list_model.dart';
+
 class ReviewCardWidget extends StatelessWidget {
   const ReviewCardWidget({
     super.key,
+    required this.results,
   });
+final Results results;
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +30,32 @@ class ReviewCardWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.grey.shade300,
-                    child: const Icon(Icons.person_outline),
-                  ),
-                  const Text("Hasinul Huda Enu", style: TextStyle(
+                    child: results.user?.avatarUrl?.isNotEmpty == true
+                            ? ClipOval(child: Image.network(results.user!.avatarUrl!,
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                      errorBuilder: (context, object, stackTrace){
+                              return const Icon(Icons.person_outline);
+                      },
+                    ))
+                            : const Icon(Icons.person_outline),
+                    ),
+                  Text(
+                    (results.user?.firstName?.isNotEmpty == true)
+                        ? "${results.user?.firstName} ${results.user?.lastName}"
+                        : "Hasinul Huda Enu",
+                    style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                       color: Colors.black54
                   ),),
                 ],
               ),
-              Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem ",
+              Text(
+                  (results.comment?.isNotEmpty ==true)
+                      ? "${results.comment}"
+                      : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem ",
                   style: TextTheme.of(context).bodyLarge
               )
             ],

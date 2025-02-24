@@ -10,10 +10,13 @@ import 'package:craftybay/features/home/ui/controller/new_product_list_controlle
 import 'package:craftybay/features/home/ui/controller/popular_product_list_controller.dart';
 import 'package:craftybay/features/home/ui/controller/special_product_list_controller.dart';
 import 'package:craftybay/features/product/ui/controller/product_details_controller.dart';
+import 'package:craftybay/features/review/ui/controller/review_list_controller.dart';
 import 'package:get/get.dart';
 
 import '../features/auth/ui/controllers/sign_up_controller.dart';
 import '../features/home/ui/controller/slider_list_controller.dart';
+import '../features/product/ui/controller/add_to_cart_controller.dart';
+import '../features/product/ui/controller/product_id_controller.dart';
 import '../services/network_caller/network_caller.dart';
 
 class ControllerBinder extends Bindings{
@@ -34,6 +37,9 @@ class ControllerBinder extends Bindings{
     Get.put(ProductListByPopularController());
     Get.put(ProductListByCategoryController());
     Get.put(ProductDetailsController());
+    Get.put(ReviewListController());
+    Get.put(AddToCartController());
+    Get.put(ProductIdController());
   }
 
 }

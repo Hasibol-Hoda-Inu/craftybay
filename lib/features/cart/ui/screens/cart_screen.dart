@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
 
 class CartScreen extends StatefulWidget {
+  static const String name = "/cartScreen";
   const CartScreen({super.key});
 
   @override

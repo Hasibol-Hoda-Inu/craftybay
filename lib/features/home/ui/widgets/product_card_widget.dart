@@ -44,7 +44,10 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
                         topRight: Radius.circular(8)
                     )
                 ),
-                child: Image.network(widget.productModel.brand?.icon ?? "https://fastly.picsum.photos/id/21/3008/2008.jpg?hmac=T8DSVNvP-QldCew7WD4jj_S3mWwxZPqdF0CNPksSko4",
+                child: Image.network(
+                  (widget.productModel.photos?.isNotEmpty ?? false)
+                      ? widget.productModel.photos!.first
+                      : "https://fastly.picsum.photos/id/21/3008/2008.jpg?hmac=T8DSVNvP-QldCew7WD4jj_S3mWwxZPqdF0CNPksSko4",
                   fit: BoxFit.cover,
                   width: 150,
                   height: 100,

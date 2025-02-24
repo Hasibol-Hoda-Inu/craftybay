@@ -6,8 +6,9 @@ import '../../../application/app_colors.dart';
 class ReviewSectionWidget extends StatelessWidget {
   const ReviewSectionWidget({
     super.key,
+    required this.productId,
   });
-
+final String productId;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +23,7 @@ class ReviewSectionWidget extends StatelessWidget {
         ),
         TextButton(
             onPressed: (){
-              Navigator.pushNamed(context, ReviewListScreen.name);
+              Navigator.pushNamed(context, ReviewListScreen.name, arguments: productId);
             },
             child: const Text("Reviews"),
         ),

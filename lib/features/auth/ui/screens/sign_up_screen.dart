@@ -1,7 +1,9 @@
 import 'package:craftybay/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,11 +41,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 16,),
                 const AppLogoWidget(),
                 const SizedBox(height: 24,),
                 Text("Sign up", style: Theme.of(context).textTheme.titleLarge ,),
                 Text("Get started with us with your details", style: Theme.of(context).textTheme.bodyLarge,),
+                const SizedBox(height: 8,),
+                buildAHanAccountMethod(context),
                 const SizedBox(height: 24,),
                 Form(
                     key: _formKey,
@@ -157,6 +160,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  Widget buildAHanAccountMethod(BuildContext context) {
+    return RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyLarge, // Inherit default text style
+              children: <TextSpan>[
+                const TextSpan(text: 'Already have an account? '),
+                TextSpan(
+                  text: 'Sign in',
+                  style: const TextStyle(
+                    color: Colors.blue, // Customize sign-in text color
+                    fontWeight: FontWeight.bold, // Make it bolder
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = onSignInTap, // Attach the onTap callback
+                ),
+              ],
+            ),
+          );
+  }
+
+  void onSignInTap(){
+    Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate)=>false);
+  }
+
   void _onTapNextScreen(){
     if(_formKey.currentState!.validate()){
       _createProfile();
@@ -190,7 +218,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
     }
   }
-
 
   @override
   void dispose() {

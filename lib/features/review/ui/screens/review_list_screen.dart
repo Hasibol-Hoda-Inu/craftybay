@@ -1,18 +1,33 @@
+import 'package:craftybay/features/product/widgets/product_details_shimmer_loading.dart';
+import 'package:craftybay/features/review/ui/controller/review_list_controller.dart';
 import 'package:craftybay/features/review/ui/screens/create_review.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../data/models/review_list_model.dart';
 import '../widgets/review_card_widget.dart';
 
 class ReviewListScreen extends StatefulWidget {
   static const String name = "/review";
-  const ReviewListScreen({super.key});
+  const ReviewListScreen({
+    super.key,
+    required this.productId
+  });
+  final String productId;
 
   @override
   State<ReviewListScreen> createState() => _ReviewListScreenState();
 }
 
 class _ReviewListScreenState extends State<ReviewListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<ReviewListController>().getReviewList(widget.productId);
+  }
+  final ReviewListController _reviewListController = Get.find<ReviewListController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +45,18 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
       body: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: _getReviewCardWidget(),
-              ),
+            child: GetBuilder<ReviewListController>(
+              builder: (controller) {
+                if(controller.inProgress){
+                  return const ProductDetailsShimmerLoading();
+                }
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: _getReviewCardWidget(controller.results),
+                  ),
+                );
+              }
             ),
           ),
           buildAddReviewsContainer(context),
@@ -84,12 +106,13 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
   void _onTapAddReviewScreen(){
     Navigator.pushNamed(context, CreateReview.name);
   }
+
 }
 
-List<Widget> _getReviewCardWidget(){
+List<Widget> _getReviewCardWidget(List<Results>results){
   List<Widget> reviewCardWidgetList = [];
-  for(int i=0; i<6; i++){
-    reviewCardWidgetList.add(const ReviewCardWidget());
+  for(int i=0; i<results.length; i++){
+    reviewCardWidgetList.add(ReviewCardWidget(results: results[i],));
   }
   return reviewCardWidgetList;
 }

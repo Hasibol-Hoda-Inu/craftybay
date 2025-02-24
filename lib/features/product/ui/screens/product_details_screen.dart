@@ -1,4 +1,8 @@
 import 'package:craftybay/application/app_colors.dart';
+import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
+import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
+import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
+import 'package:craftybay/features/product/ui/controller/add_to_cart_controller.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
 import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
 import 'package:craftybay/features/product/widgets/size_picker_widget.dart';
@@ -6,10 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/data/models/product_pagination_model/product_pagination_model.dart';
-import '../../../home/ui/controller/special_product_list_controller.dart';
+import '../../../common/ui/controllers/auth_controller.dart';
+import '../../../common/ui/widgets/show_snackbar_message.dart';
 import '../../widgets/color_picker_widget.dart';
-import '../../widgets/product_details_shimmer_loading.dart';
 import '../../widgets/review_section_widget.dart';
+import '../controller/product_id_controller.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const String name = "/product/product-details";
@@ -39,11 +44,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     "XXL",
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    Get.find<ProductListBySpecialController>().getSpecialProductList();
-  }
+  final AddToCartController _addToCart = Get.find<AddToCartController>();
+  final AuthController _auth = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +61,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               height: 2,
               color: Colors.grey.shade200,)),
       ),
-      body: GetBuilder<ProductListBySpecialController>(
-        builder: (controller) {
-          if(controller.inProgress){
-            return const ProductDetailsShimmerLoading();
-          }
-          if(controller.errorMessage != null){
-            return Center(child: Text(controller.errorMessage!),);
-          }
-          return Column(
+      body: Column(
             children: [
               ProductImageCarouselSliderWidget(
                 imageUrls: widget.productList.photos ?? [],
@@ -97,7 +91,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         fontSize: 22,
                                         color: AppColors.themeColor
                                       )),
-                                  const ReviewSectionWidget()
+                                  ReviewSectionWidget(productId: widget.productList.sId.toString(),)
                                 ],
                               ),
                             ),
@@ -123,10 +117,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
               ),
               buildAddToCartContainer(context, widget.productList.currentPrice.toString())
-            ],
-          );
-        }
-      ),
+            ]
+      )
     );
   }
 
@@ -160,12 +152,42 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               SizedBox(
                 width: 120,
                 child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      _addToCartMethod();
+                    },
                     child: const Text("Add to Cart", style: TextStyle(color: Colors.white),)),
               )
             ],
           ),
         );
+  }
+
+  Future<void> _addToCartMethod()async {
+    String productId = widget.productList.sId.toString(); // Your product ID
+    Get.find<ProductIdController>().setProductId(productId);
+
+    await _auth.getToken();
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      // await _auth.getUserData();
+      String token = _auth.accessToken.toString();
+      debugPrint("TOKEN: $token");
+      debugPrint("Hola");
+      final bool result = await _addToCart.postAddToCart(widget.productList.sId.toString(), token);
+      if(result){
+        if(mounted){
+          Navigator.pushNamed(context, CartScreen.name);
+        }
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _addToCart.errorMessage ?? "Something went wrong, Please try again");
+        }
+      }
+    }else{
+      if(mounted){
+        Navigator.pushNamedAndRemoveUntil (context, SignUpScreen.name, (predicate)=>false);
+      }
+    }
   }
 
   void _onPop(){

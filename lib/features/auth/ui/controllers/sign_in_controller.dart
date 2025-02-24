@@ -29,8 +29,9 @@ class SignInController extends GetxController{
     );
     if(response.isSuccess){
       AuthSuccessModel signInModel = AuthSuccessModel.fromJson(response.responseData);
-      await Get.find<AuthController>().saveUserData(signInModel.data!.token!,
-          signInModel.data!.user!,
+      await Get.find<AuthController>().saveUserData(
+        signInModel.data!.token!,
+        signInModel.data!.user!,
       );
       isSuccess = true;
       _errorMessage = null;
