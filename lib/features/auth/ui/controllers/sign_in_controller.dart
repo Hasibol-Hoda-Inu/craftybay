@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../../application/urls.dart';
 import '../../../common/ui/controllers/auth_controller.dart';
-import 'read_profile_controller.dart';
 
 class SignInController extends GetxController{
   bool _inProgress = false;

@@ -14,6 +14,7 @@ import 'package:craftybay/features/review/ui/controller/review_list_controller.d
 import 'package:get/get.dart';
 
 import '../features/auth/ui/controllers/sign_up_controller.dart';
+import '../features/cart/ui/controllers/cart_list_controller.dart';
 import '../features/home/ui/controller/slider_list_controller.dart';
 import '../features/product/ui/controller/add_to_cart_controller.dart';
 import '../features/product/ui/controller/product_id_controller.dart';
@@ -40,6 +41,7 @@ class ControllerBinder extends Bindings{
     Get.put(ReviewListController());
     Get.put(AddToCartController());
     Get.put(ProductIdController());
+    Get.put(CartListController());
   }
 
 }

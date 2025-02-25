@@ -1,5 +1,3 @@
-
-
 import 'package:craftybay/features/common/data/models/product_pagination_model/product_pagination_model.dart';
 
 class ProductDetailsModel {

@@ -1,9 +1,12 @@
 import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/cart/ui/widgets/cart_item_card_widget.dart';
+import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
+import '../controllers/cart_list_controller.dart';
 
 class CartScreen extends StatefulWidget {
   static const String name = "/cartScreen";
@@ -14,6 +17,15 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final AuthController _auth = Get.find<AuthController>();
+  final CartListController _cartListController = Get.find<CartListController>();
+
+  @override
+  void initState() {
+    super.initState();
+    getCartItemList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -88,6 +100,18 @@ class _CartScreenState extends State<CartScreen> {
 
   void _onPop(){
     Get.find<MainBottomNavController>().backToHome();
+  }
+
+  Future<void> getCartItemList()async {
+    String? token = _auth.accessToken;
+    bool result = await _cartListController.getCartList(token!);
+    if(result && mounted){
+      showSnackBarMessage(context, "Added to cart successfully!");
+    }else{
+      if(mounted){
+        showSnackBarMessage(context, _cartListController.errorMessage ?? "Something went wrong");
+      }
+    }
   }
 }
 
