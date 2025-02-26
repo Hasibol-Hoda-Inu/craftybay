@@ -3,6 +3,8 @@ import 'package:craftybay/features/auth/data/models/sign_in_model.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/product/ui/controller/add_to_cart_controller.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
 import 'package:craftybay/features/common/ui/widgets/product_quantity_stepper_widget.dart';
@@ -12,6 +14,7 @@ import 'package:get/get.dart';
 
 import '../../../common/data/models/product_pagination_model/product_pagination_model.dart';
 import '../../../common/ui/controllers/auth_controller.dart';
+import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
 import '../../../common/ui/widgets/show_snackbar_message.dart';
 import '../../widgets/color_picker_widget.dart';
 import '../../widgets/review_section_widget.dart';
@@ -152,11 +155,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
               SizedBox(
                 width: 120,
-                child: ElevatedButton(
-                    onPressed: (){
-                      _addToCartMethod();
-                    },
-                    child: const Text("Add to Cart", style: TextStyle(color: Colors.white),)),
+                child: GetBuilder<AddToCartController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                      return const CenteredCircularProgressIndicator();
+                    }
+                    return ElevatedButton(
+                        onPressed: (){
+                          _addToCartMethod();
+                        },
+                        child: const Text("Add to Cart", style: TextStyle(color: Colors.white),));
+                  }
+                ),
               )
             ],
           ),
@@ -173,10 +183,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       debugPrint("TOKEN: $token");
       final bool result = await _addToCart.postAddToCart(widget.productList.sId.toString(), token);
       if(result && mounted){
-          Navigator.pushNamed(context, CartScreen.name);
+        _onTapCartScreen();
       }else{
         if(mounted){
-          showSnackBarMessage(context, _addToCart.errorMessage ?? "Something went wrong, Please try again");
+          showSnackBarMessage(context, _addToCart.errorMessage ?? "Something went wrong, Please try again", false);
         }
       }
     }else{
@@ -184,6 +194,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         Navigator.pushNamedAndRemoveUntil (context, SignUpScreen.name, (predicate)=>false);
       }
     }
+  }
+
+  void _onTapCartScreen(){
+    Get.find<MainBottomNavController>().changeIndex(2);
   }
 
   void _onPop(){

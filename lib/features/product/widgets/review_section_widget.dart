@@ -1,14 +1,30 @@
+import 'package:craftybay/features/common/data/models/error_response_model.dart';
+import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/review/ui/screens/review_list_screen.dart';
+import 'package:craftybay/features/product/ui/controller/add_to_wishlist_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../application/app_colors.dart';
+import '../../auth/ui/screens/sign_up_screen.dart';
+import '../../common/ui/widgets/show_snackbar_message.dart';
 
-class ReviewSectionWidget extends StatelessWidget {
+class ReviewSectionWidget extends StatefulWidget {
   const ReviewSectionWidget({
     super.key,
     required this.productId,
   });
 final String productId;
+
+  @override
+  State<ReviewSectionWidget> createState() => _ReviewSectionWidgetState();
+}
+
+class _ReviewSectionWidgetState extends State<ReviewSectionWidget> {
+final AddToWishlistController _wishlistController = Get.find<AddToWishlistController>();
+final AuthController _auth = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,19 +39,47 @@ final String productId;
         ),
         TextButton(
             onPressed: (){
-              Navigator.pushNamed(context, ReviewListScreen.name, arguments: productId);
+              Navigator.pushNamed(context, ReviewListScreen.name, arguments: widget.productId);
             },
             child: const Text("Reviews"),
         ),
-        Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: AppColors.themeColor,
-            borderRadius: BorderRadius.circular(6),
+        GestureDetector(
+          onTap: _onTapWishListScreen,
+          child: GetBuilder<AddToWishlistController>(
+            builder: (controller) {
+              if(controller.inProgress){
+                return const CenteredCircularProgressIndicator();
+              }
+              return Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: AppColors.themeColor,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: const Icon(Icons.favorite_border, color: Colors.white, size: 14,),
+              );
+            }
           ),
-          child: const Icon(Icons.favorite_border, color: Colors.white, size: 14,),
         ),
       ],
     );
+  }
+
+  Future<void> _onTapWishListScreen()async {
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      bool result = await _wishlistController.postAddToWishlist(_auth.accessToken!, widget.productId);
+      if(result && mounted){
+        showSnackBarMessage(context, "Successfully Added!");
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _wishlistController.errorMessage ?? "Something went wrong, Please try again", false);
+        }
+      }
+    }else{
+      if(mounted){
+        Navigator.pushNamedAndRemoveUntil (context, SignUpScreen.name, (predicate)=>false);
+      }
+    }
   }
 }
