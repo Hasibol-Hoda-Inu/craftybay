@@ -55,8 +55,6 @@ class ProductListByNewController extends GetxController{
       isSuccess = false;
       _errorMessage = response.errorMessage;
     }
-
-    print("ami achi");
     _inProgress = false;
     update();
     return isSuccess;

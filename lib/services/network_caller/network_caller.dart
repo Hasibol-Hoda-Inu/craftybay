@@ -20,7 +20,9 @@ class NetworkResponse{
 
 class NetworkCaller {
   final Logger _logger = Logger();
-  Future<NetworkResponse> getRequest(String url, {Map<String, dynamic>? queryParams, Map<String, String>?pathVariables, String? accessToken}) async{
+  Future<NetworkResponse> getRequest(
+      String url,
+      {Map<String, dynamic>? queryParams, Map<String, String>?pathVariables, String? accessToken}) async{
     try{
       Map<String, String> headers = {
         "content-type": "application/json"
@@ -49,10 +51,11 @@ class NetworkCaller {
       _logResponse(url: url, statusCode: response.statusCode, headers: response.headers, body: response.body);
 
       final decodedData = jsonDecode(response.body);
-      if (response.statusCode == 200 || response.statusCode == 200) {
+      if (response.statusCode == 200) {
         return NetworkResponse(isSuccess: true, statusCode: response.statusCode, responseData: decodedData);
-      } else {
-        return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: decodedData["data"]);
+      }else {
+        ErrorResponseModel errorResponseModel = ErrorResponseModel.fromJson(decodedData);
+        return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: errorResponseModel.msg);
       }
     }catch(e){
       _logResponse(url: url, errorMessage: e.toString());

@@ -2,11 +2,13 @@ import 'package:craftybay/application/app_colors.dart';
 import 'package:craftybay/features/cart/ui/widgets/cart_item_card_widget.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
+import 'package:craftybay/features/home/ui/widgets/banner_shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
 import '../controllers/cart_list_controller.dart';
+import '../widgets/cart_screen_shimmer_loading.dart';
 
 class CartScreen extends StatefulWidget {
   static const String name = "/cartScreen";
@@ -43,18 +45,30 @@ class _CartScreenState extends State<CartScreen> {
                 height: 2,
                 color: Colors.grey.shade200,)),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, index)=>const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: CartItemCardWidget(),
-                  )),
-            ),
-            buildCheckOutContainer(context)
-          ],
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            getCartItemList();
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: GetBuilder<CartListController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                      return const CartScreenShimmerLoading();
+                    }
+                    return ListView.builder(
+                        itemCount: controller.cartItemList.length,
+                        itemBuilder: (BuildContext context, index)=> Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: CartItemCardWidget(cartItem: controller.cartItemList[index],),
+                        ));
+                  }
+                ),
+              ),
+              buildCheckOutContainer(context)
+            ],
+          ),
         ),
       ),
     );
@@ -102,17 +116,22 @@ class _CartScreenState extends State<CartScreen> {
     Get.find<MainBottomNavController>().backToHome();
   }
 
+
   Future<void> getCartItemList()async {
     String? token = _auth.accessToken;
-    bool result = await _cartListController.getCartList(token!);
+    print("TOKEN: $token");
+    _cartListController.cartItemList.clear();
+    bool result = await _cartListController.getCartList(token ?? "");
     if(result && mounted){
-      showSnackBarMessage(context, "Added to cart successfully!");
+
     }else{
       if(mounted){
-        showSnackBarMessage(context, _cartListController.errorMessage ?? "Something went wrong");
+        showSnackBarMessage(context, _cartListController.errorMessage ?? "Something went wrong", false);
       }
     }
   }
 }
+
+
 
 
