@@ -1,6 +1,8 @@
 import 'package:craftybay/features/cart/data/models/cart_item_list_data_model.dart';
+import 'package:craftybay/features/cart/ui/controllers/cart_list_controller.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../application/app_colors.dart';
 import '../../../../application/assets_path.dart';
@@ -18,6 +20,7 @@ class CartItemCardWidget extends StatefulWidget {
 }
 
 class _CartItemCardWidgetState extends State<CartItemCardWidget> {
+  final CartListController _controller = Get.find<CartListController>();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,7 +33,12 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
           children: [
             GestureDetector(
                 onTap: _onTapNavigateToProductDetailsScreen,
-                child: Image.asset(AssetsPath.productImagePng, width: 120,)),
+                child: Image.network(
+                  (widget.cartItem.product?.photos?.isNotEmpty == true)
+                      ? "${widget.cartItem.product?.photos}"
+                      : "https://hudaenu.xyz/wp-content/uploads/2025/02/shoe2.png",
+                  width: 120,),
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +59,7 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
                       ),
                       IconButton(
                           onPressed: (){},
-                          icon: const Icon(Icons.delete_rounded))
+                          icon: const Icon(Icons.delete_rounded, color: Colors.grey,))
                     ],
                   ),
                   Row(
@@ -63,7 +71,11 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
                           fontSize: 18,
                           fontWeight: FontWeight.w500
                       ),),
-                      ProductQuantityStepperWidget(onChange: (int value){})
+                      ProductQuantityStepperWidget(
+                        onChange: (int value){
+                        _controller.calculateTotalPrice();
+                      },
+                      )
                     ],
                   )
                 ],

@@ -9,6 +9,8 @@ class CartListController extends GetxController{
   bool _inProgress = false;
   bool get inProgress => _inProgress;
 
+  int totalPrice = 0;
+
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
@@ -31,6 +33,7 @@ class CartListController extends GetxController{
       CartItemListDataModel cartItemListDataModel = CartItemListDataModel.fromJson(response.responseData);
       _cartItemList.addAll(cartItemListDataModel.data?.results ?? []);
 
+
     }else{
       isSuccess = false;
       _errorMessage = response.errorMessage;
@@ -39,4 +42,13 @@ class CartListController extends GetxController{
     update();
     return isSuccess;
   }
+
+  void calculateTotalPrice() {
+    totalPrice = _cartItemList.fold<int>(0, (sum, result) {
+      final price = result.product?.currentPrice ?? 0;
+      final quantity = result.quantity ?? 0;
+      return sum + (price * quantity);
+    });
+  }
+
 }

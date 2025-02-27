@@ -1,8 +1,10 @@
 import 'package:craftybay/application/app_colors.dart';
+import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/cart/ui/widgets/cart_item_card_widget.dart';
+import 'package:craftybay/features/checkout/ui/screens/checkout_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
-import 'package:craftybay/features/home/ui/widgets/banner_shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -89,22 +91,33 @@ class _CartScreenState extends State<CartScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Total Price",),
-              Text("\$100,000.00", style: TextStyle(
-                  color: AppColors.themeColor,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700
-              ),),
+              const Text("Total Price",),
+              GetBuilder<CartListController>(
+                builder: (controller) {
+                  if(controller.inProgress){
+                    return const CenteredCircularProgressIndicator();
+                  }
+                  return Text("\$${controller.totalPrice}",
+                    style: const TextStyle(
+                      color: AppColors.themeColor,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700
+                  ),
+                  );
+                }
+              ),
             ],
           ),
           SizedBox(
             width: 120,
             child: ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(context, CheckoutScreen.name);
+                },
                 child: const Text("Checkout", style: TextStyle(color: Colors.white),)),
           )
         ],
@@ -116,17 +129,22 @@ class _CartScreenState extends State<CartScreen> {
     Get.find<MainBottomNavController>().backToHome();
   }
 
-
   Future<void> getCartItemList()async {
-    String? token = _auth.accessToken;
-    print("TOKEN: $token");
-    _cartListController.cartItemList.clear();
-    bool result = await _cartListController.getCartList(token ?? "");
-    if(result && mounted){
-
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      String? token = _auth.accessToken;
+      _cartListController.cartItemList.clear();
+      bool result = await _cartListController.getCartList(token ?? "");
+      if(result && mounted){
+        _cartListController.calculateTotalPrice();
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _cartListController.errorMessage ?? "Something went wrong", false);
+        }
+      }
     }else{
       if(mounted){
-        showSnackBarMessage(context, _cartListController.errorMessage ?? "Something went wrong", false);
+        Navigator.pushNamed(context, SignUpScreen.name);
       }
     }
   }
