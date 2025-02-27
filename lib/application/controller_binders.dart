@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 
 import '../features/auth/ui/controllers/sign_up_controller.dart';
 import '../features/cart/ui/controllers/cart_list_controller.dart';
+import '../features/checkout/ui/controllers/create_order_controller.dart';
 import '../features/home/ui/controller/slider_list_controller.dart';
 import '../features/product/ui/controller/add_to_cart_controller.dart';
 import '../features/product/ui/controller/product_id_controller.dart';
@@ -46,7 +47,7 @@ class ControllerBinder extends Bindings{
     Get.put(CartListController());
     Get.put(AddToWishlistController());
     Get.put(WishlistItemListController());
-
+    Get.put(CreateOrderController());
   }
 
 }

@@ -1,5 +1,7 @@
 import 'package:craftybay/application/app_colors.dart';
+import 'package:craftybay/features/cart/ui/controllers/cart_list_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductQuantityStepperWidget extends StatefulWidget {
   const ProductQuantityStepperWidget({
@@ -7,12 +9,15 @@ class ProductQuantityStepperWidget extends StatefulWidget {
     required this.onChange,
   });
   final Function(int) onChange;
+
   @override
   State<ProductQuantityStepperWidget> createState() => _ProductQuantityStepperWidgetState();
 }
 
 class _ProductQuantityStepperWidgetState extends State<ProductQuantityStepperWidget> {
+  CartListController controller = Get.find<CartListController>();
   int _count = 1;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,10 +29,12 @@ class _ProductQuantityStepperWidgetState extends State<ProductQuantityStepperWid
               backgroundColor: AppColors.themeColor
             ),
             icon: const Icon(Icons.remove, color: Colors.white,)),
-        Text("$_count", style: const TextStyle(
+        Text("$_count",
+          style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500
-        ),),
+        ),
+        ),
         IconButton.filledTonal(
             onPressed: _increment,
             style: IconButton.styleFrom(
@@ -37,6 +44,7 @@ class _ProductQuantityStepperWidgetState extends State<ProductQuantityStepperWid
       ],
     );
   }
+
   void _increment(){
     _count++;
     widget.onChange(_count);

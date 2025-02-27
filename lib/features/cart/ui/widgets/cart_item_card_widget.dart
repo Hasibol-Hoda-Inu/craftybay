@@ -37,7 +37,8 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
                   (widget.cartItem.product?.photos?.isNotEmpty == true)
                       ? "${widget.cartItem.product?.photos}"
                       : "https://hudaenu.xyz/wp-content/uploads/2025/02/shoe2.png",
-                  width: 120,),
+                  width: 120,
+                ),
             ),
             Expanded(
               child: Column(
