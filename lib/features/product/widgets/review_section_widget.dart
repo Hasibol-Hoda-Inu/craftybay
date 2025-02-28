@@ -1,4 +1,3 @@
-import 'package:craftybay/features/common/data/models/error_response_model.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/review/ui/screens/review_list_screen.dart';
@@ -44,7 +43,7 @@ final AuthController _auth = Get.find<AuthController>();
             child: const Text("Reviews"),
         ),
         GestureDetector(
-          onTap: _onTapWishListScreen,
+          onTap: _addToWishList,
           child: GetBuilder<AddToWishlistController>(
             builder: (controller) {
               if(controller.inProgress){
@@ -65,7 +64,7 @@ final AuthController _auth = Get.find<AuthController>();
     );
   }
 
-  Future<void> _onTapWishListScreen()async {
+  Future<void> _addToWishList()async {
     bool loggedIn = await _auth.isUserLoggedIn();
     if(loggedIn){
       bool result = await _wishlistController.postAddToWishlist(_auth.accessToken!, widget.productId);

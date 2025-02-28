@@ -1,9 +1,5 @@
 import 'package:craftybay/application/app_colors.dart';
-import 'package:craftybay/features/auth/data/models/sign_in_model.dart';
-import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
-import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
-import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/product/ui/controller/add_to_cart_controller.dart';
 import 'package:craftybay/features/product/widgets/product_image_carousel_slider_widget.dart';
@@ -197,6 +193,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void _onTapCartScreen(){
+    // Navigator.pushNamed(context, CartScreen.name);
     Get.find<MainBottomNavController>().changeIndex(2);
   }
 

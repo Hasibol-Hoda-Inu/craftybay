@@ -1,4 +1,3 @@
-import 'package:craftybay/features/cart/ui/controllers/cart_list_controller.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:craftybay/features/wishlist/ui/controllers/delete_wishlist_item_controller.dart';

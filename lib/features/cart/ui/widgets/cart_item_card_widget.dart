@@ -1,11 +1,15 @@
+import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/cart/data/models/cart_item_list_data_model.dart';
 import 'package:craftybay/features/cart/ui/controllers/cart_list_controller.dart';
+import 'package:craftybay/features/cart/ui/controllers/delete_cart_item_controller.dart';
+import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../application/app_colors.dart';
-import '../../../../application/assets_path.dart';
 import '../../../common/ui/widgets/product_quantity_stepper_widget.dart';
 
 class CartItemCardWidget extends StatefulWidget {
@@ -20,7 +24,10 @@ class CartItemCardWidget extends StatefulWidget {
 }
 
 class _CartItemCardWidgetState extends State<CartItemCardWidget> {
-  final CartListController _controller = Get.find<CartListController>();
+  final CartListController _cartListController = Get.find<CartListController>();
+  final AuthController _auth = Get.find<AuthController>();
+  final DeleteCartItemController _deleteCartItemController = Get.find<DeleteCartItemController>();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -58,9 +65,18 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
                           ],
                         ),
                       ),
-                      IconButton(
-                          onPressed: (){},
-                          icon: const Icon(Icons.delete_rounded, color: Colors.grey,))
+                      GetBuilder<DeleteCartItemController>(
+                        builder: (controller) {
+                          if(controller.isDeleting(widget.cartItem.sId ?? "")){
+                            return const CenteredCircularProgressIndicator();
+                          }
+                          return IconButton(
+                              onPressed: (){
+                                _deleteCartItem();
+                              },
+                              icon: const Icon(Icons.delete_rounded, color: Colors.grey,));
+                        }
+                      )
                     ],
                   ),
                   Row(
@@ -74,7 +90,6 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
                       ),),
                       ProductQuantityStepperWidget(
                         onChange: (int value){
-                        _controller.calculateTotalPrice();
                       },
                       )
                     ],
@@ -86,6 +101,27 @@ class _CartItemCardWidgetState extends State<CartItemCardWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> _deleteCartItem()async {
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      String productId = widget.cartItem.sId ?? "";
+      String token = _auth.accessToken ?? "";
+      bool result = await _deleteCartItemController.deleteCartItem(token, productId);
+      if(result && mounted){
+        _cartListController.getCartList(token);
+        showSnackBarMessage(context, "Cart item removed successfully");
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _deleteCartItemController.errorMessage ?? "Something went wrong", false);
+        }
+      }
+    }else{
+      if(mounted){
+        Navigator.pushNamed(context, SignUpScreen.name);
+      }
+    }
   }
 
   void _onTapNavigateToProductDetailsScreen(){

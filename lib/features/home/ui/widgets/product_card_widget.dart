@@ -1,8 +1,14 @@
 import 'package:craftybay/features/common/data/models/product_pagination_model/product_pagination_model.dart';
+import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:craftybay/features/product/ui/controller/add_to_wishlist_controller.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../../auth/ui/screens/sign_up_screen.dart';
+import '../../../common/ui/widgets/show_snackbar_message.dart';
 
 class ProductCardWidget extends StatefulWidget {
   const ProductCardWidget({
@@ -17,6 +23,9 @@ class ProductCardWidget extends StatefulWidget {
 }
 
 class _ProductCardWidgetState extends State<ProductCardWidget> {
+  final AuthController _auth = Get.find<AuthController>();
+  final AddToWishlistController _wishlistController = Get.find<AddToWishlistController>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -62,30 +71,41 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          fontWeight: FontWeight.w500
+                          fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 2,),
-                    Wrap(
+                    Row(
                       spacing: 6,
                       children: [
-                        Text("\$${widget.productModel.currentPrice ?? ""}", style: const TextStyle(
+                        Text("\$${widget.productModel.currentPrice ?? ""}",
+                          style: const TextStyle(
                           color: AppColors.themeColor,
                           fontWeight: FontWeight.w700,
                         ),),
-                         Wrap(
+                        Wrap(
                            children: [
-                             const Icon(Icons.star_rounded, color: Colors.amber, size: 18,),
-                             Text("${widget.productModel.quantity ?? ""}"),
+                             const Icon(Icons.star_rounded, color: Colors.amber, size: 20,),
+                             Text("${widget.productModel.quantity ?? ""}",
+                             ),
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: AppColors.themeColor,
-                            borderRadius: BorderRadius.circular(8),
+                        InkWell(
+                          onTap: _addToWishList,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: AppColors.themeColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: GetBuilder<AddToWishlistController>(
+                              builder: (controller) {
+                                if(controller.isDeleting(widget.productModel.sId ?? "")){
+                                  return const SizedBox(width: 14, height: 14, child: CenteredCircularProgressIndicator());
+                                }
+                                return const Icon(Icons.favorite_border_rounded, color: Colors.white, size: 14,);
+                              }
+                            ),
                           ),
-                          child: const Icon(Icons.favorite_border, color: Colors.white, size: 14,),
                         )
                       ],
                     )
@@ -97,5 +117,22 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
         ),
       ),
     );
+  }
+  Future<void> _addToWishList()async {
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      bool result = await _wishlistController.postAddToWishlist(_auth.accessToken!, widget.productModel.sId ?? "");
+      if(result && mounted){
+        showSnackBarMessage(context, "Successfully Added!");
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _wishlistController.errorMessage ?? "Something went wrong, Please try again", false);
+        }
+      }
+    }else{
+      if(mounted){
+        Navigator.pushNamed(context, SignUpScreen.name);
+      }
+    }
   }
 }

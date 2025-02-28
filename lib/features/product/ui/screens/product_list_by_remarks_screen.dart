@@ -31,12 +31,7 @@ class _ProductListByRemarksScreenState extends State<ProductListByRemarksScreen>
               color: Colors.grey.shade200,)),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(
-          left: 8,
-          top: 8,
-          right: 8,
-          bottom: 0,
-        ),
+        padding: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 0,),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,

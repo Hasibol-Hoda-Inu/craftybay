@@ -20,6 +20,7 @@ class CartListController extends GetxController{
   Future<bool> getCartList(String token)async{
     bool isSuccess = false;
     _inProgress = true;
+    _cartItemList.clear();
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(

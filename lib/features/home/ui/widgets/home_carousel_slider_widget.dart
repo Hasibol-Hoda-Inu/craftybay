@@ -38,23 +38,25 @@ class _HomeCarouselSliderWidgetState extends State<HomeCarouselSliderWidget> {
                         borderRadius: BorderRadius.circular(5),
                       image: DecorationImage(image: NetworkImage(banner.photoUrl ?? ""), fit: BoxFit.cover),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         spacing: 12,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(banner.description ?? "", style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                          ),),
-                          SizedBox(
-                            width: 120,
-                            child: ElevatedButton(
-                                onPressed: (){},
-                                child: const Text("Buy Now")),
-                          )
+                          // Text(banner.description ?? "",
+                          //   style: const TextStyle(
+                          //   fontSize: 22,
+                          //   fontWeight: FontWeight.w700,
+                          //     color: Colors.white
+                          // ),),
+                          // SizedBox(
+                          //   width: 120,
+                          //   child: ElevatedButton(
+                          //       onPressed: (){},
+                          //       child: const Text("Buy Now")),
+                          // )
                         ],
                       ),
                     )

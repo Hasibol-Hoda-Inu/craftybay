@@ -20,9 +20,10 @@ class NetworkResponse{
 
 class NetworkCaller {
   final Logger _logger = Logger();
+
   Future<NetworkResponse> getRequest(
       String url,
-      {Map<String, dynamic>? queryParams, Map<String, String>?pathVariables, String? accessToken}) async{
+      {Map<String, dynamic>? queryParams, String? accessToken}) async{
     try{
       Map<String, String> headers = {
         "content-type": "application/json"
@@ -35,12 +36,6 @@ class NetworkCaller {
         url += "?";
         for (String param in queryParams.keys) {
           url += "$param=${queryParams[param]}&";
-        }
-      }
-      if(pathVariables != null) {
-        url += ":";
-        for (String variables in pathVariables.keys) {
-          url += variables;
         }
       }
 
@@ -76,6 +71,36 @@ class NetworkCaller {
       _logRequest(url, headers, body);
 
       Response response = await post(uri, headers: headers, body: jsonEncode(body),);
+
+      _logResponse(url: url, statusCode: response.statusCode, headers: response.headers, body: response.body);
+
+      final decodedData = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return NetworkResponse(isSuccess: true, statusCode: response.statusCode, responseData: decodedData);
+      } else {
+        ErrorResponseModel errorResponseModel = ErrorResponseModel.fromJson(decodedData);
+        return NetworkResponse(isSuccess: false, statusCode: response.statusCode, errorMessage: errorResponseModel.msg);
+      }
+    }catch(e){
+      _logResponse(url: url, errorMessage: e.toString());
+      return NetworkResponse(isSuccess: false, statusCode: -1, errorMessage: e.toString());
+    }
+  }
+
+
+  Future<NetworkResponse> deleteRequest(String url, {String? accessToken,}) async{
+    try{
+      Uri uri = Uri.parse(url);
+      Map<String, String> headers = {
+        "content-type": "application/json",
+      };
+      if(accessToken != null){
+        headers["token"] = accessToken;
+      }
+
+      _logRequest(url, headers,);
+
+      Response response = await delete(uri, headers: headers,);
 
       _logResponse(url: url, statusCode: response.statusCode, headers: response.headers, body: response.body);
 

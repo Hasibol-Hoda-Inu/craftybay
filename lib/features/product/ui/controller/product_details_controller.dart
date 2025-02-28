@@ -24,13 +24,8 @@ class ProductDetailsController extends GetxController{
     _inProgress = true;
     update();
 
-    Map<String, String> pathVariables = {
-      "product_id": id
-    };
-
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
         Urls.productDetails,
-        pathVariables: pathVariables
     );
 
     if(response.isSuccess){

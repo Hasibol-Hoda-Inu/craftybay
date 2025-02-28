@@ -3,27 +3,27 @@ import 'package:get/get.dart';
 
 import '../../../../application/urls.dart';
 
-class AddToCartController extends GetxController{
+
+class DeleteWishlistItemController extends GetxController{
 
   bool _inProgress = false;
   bool get inProgress => _inProgress;
 
+  String? _currentDeletingId;
+  bool isDeleting(String cartItemId)=> _currentDeletingId == cartItemId;
+
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> postAddToCart(String id, String token)async{
+  Future<bool> deleteWishlistItem(String token, String productId)async{
     bool isSuccess = false;
+    _currentDeletingId = productId;
     _inProgress = true;
     update();
 
-    Map<String, String> body = {
-      "product": id
-    };
-
-    final NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
-        Urls.addToCartUrl,
-        body: body,
-        accessToken: token,
+    final NetworkResponse response = await Get.find<NetworkCaller>().deleteRequest(
+      Urls.deleteWishlistItemUrl(productId),
+      accessToken: token,
     );
     if(response.isSuccess){
       isSuccess = true;
@@ -34,7 +34,9 @@ class AddToCartController extends GetxController{
       _errorMessage = response.errorMessage;
     }
     _inProgress = false;
+    _currentDeletingId = null;
     update();
     return isSuccess;
   }
+
 }

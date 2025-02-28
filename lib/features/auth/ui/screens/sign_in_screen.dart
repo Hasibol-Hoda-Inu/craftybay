@@ -5,7 +5,6 @@ import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:craftybay/features/product/ui/controller/product_id_controller.dart';
-import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

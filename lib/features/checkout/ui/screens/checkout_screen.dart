@@ -1,5 +1,3 @@
-import 'package:craftybay/features/auth/ui/controllers/sign_up_controller.dart';
-import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/cart/ui/controllers/cart_list_controller.dart';

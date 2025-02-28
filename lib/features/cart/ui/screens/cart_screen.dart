@@ -133,7 +133,6 @@ class _CartScreenState extends State<CartScreen> {
     bool loggedIn = await _auth.isUserLoggedIn();
     if(loggedIn){
       String? token = _auth.accessToken;
-      _cartListController.cartItemList.clear();
       bool result = await _cartListController.getCartList(token ?? "");
       if(result && mounted){
         _cartListController.calculateTotalPrice();

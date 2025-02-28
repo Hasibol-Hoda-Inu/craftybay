@@ -156,9 +156,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _onTapProductListScreen({required String categoryName}){
-    Navigator.pushNamed(context, ProductListByRemarksScreen.name, arguments: categoryName);
-  }
 
   List<Widget> _getCategoryList(List<CategoryItemModel> categoryModel){
     List<Widget> categoryList = [];

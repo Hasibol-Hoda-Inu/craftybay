@@ -26,7 +26,6 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
     super.initState();
     Get.find<ReviewListController>().getReviewList(widget.productId);
   }
-  final ReviewListController _reviewListController = Get.find<ReviewListController>();
 
   @override
   Widget build(BuildContext context) {
