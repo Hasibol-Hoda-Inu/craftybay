@@ -1,5 +1,7 @@
+import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/product_list_shimmer_loading.dart';
+import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:craftybay/features/wishlist/ui/controllers/wishlist_item_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,12 +24,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
   @override
   void initState() {
     super.initState();
-    _wishlistItemController.getWishlistItemList(_auth.accessToken ?? "");
+    _getWishlistItemList();
     _scrollController = ScrollController()..addListener(_loadMoreData);
   }
+
   void _loadMoreData(){
     if(_scrollController.position.extentAfter < 300){
-      _wishlistItemController.getWishlistItemList(_auth.accessToken ?? "");
+      _getWishlistItemList();
     }
   }
 
@@ -52,14 +55,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
           onRefresh: ()async{
             _wishlistItemController.refreshWishlistItemList();
           },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 0,),
-            child: GetBuilder<WishlistItemListController>(
-              builder: (controller) {
-                if(controller.initialInProgress){
-                  return const ProductListShimmerLoading();
-                }
-                return Column(
+          child: GetBuilder<WishlistItemListController>(
+            builder: (controller) {
+              if(controller.initialInProgress){
+                return const ProductListShimmerLoading();
+              }
+              return Padding(
+                padding: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 0,),
+                child: Column(
                   children: [
                     Expanded(
                       child: GridView.builder(
@@ -80,14 +83,35 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         visible: controller.inProgress,
                         child: const LinearProgressIndicator())
                   ],
-                );
-              }
-            ),
+                ),
+              );
+            }
           ),
         ),
       ),
     );
   }
+
+  Future<void> _getWishlistItemList()async{
+    bool loggedIn = await _auth.isUserLoggedIn();
+    if(loggedIn){
+      String token = _auth.accessToken!;
+
+      bool result = await _wishlistItemController.getWishlistItemList(token);
+      if(result && mounted){
+
+      }else{
+        if(mounted){
+          showSnackBarMessage(context, _wishlistItemController.errorMessage ?? "Something went wrong", false);
+        }
+      }
+    }else{
+      if(mounted){
+        Navigator.pushNamed(context, SignUpScreen.name);
+      }
+    }
+  }
+
   void _onPop(){
     Get.find<MainBottomNavController>().backToHome();
   }

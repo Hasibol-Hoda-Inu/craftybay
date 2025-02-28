@@ -8,12 +8,16 @@ class AddToWishlistController extends GetxController{
   bool _inProgress = false;
   bool get inProgress => _inProgress;
 
+  String? _currentDeletingId;
+  bool isDeleting(String cartItemId)=> _currentDeletingId == cartItemId;
+
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
   Future<bool> postAddToWishlist(String token, String id)async{
     bool isSuccess = false;
     _inProgress = true;
+    _currentDeletingId = id;
     update();
     Map<String, dynamic> reqBody = {
       "product": id,
@@ -31,6 +35,7 @@ class AddToWishlistController extends GetxController{
       _errorMessage = response.errorMessage;
     }
     _inProgress = false;
+    _currentDeletingId = null;
     update();
     return isSuccess;
   }

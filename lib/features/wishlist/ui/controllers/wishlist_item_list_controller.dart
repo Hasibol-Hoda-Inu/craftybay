@@ -28,6 +28,7 @@ class WishlistItemListController extends GetxController{
 
     bool isSuccess = false;
     _inProgress = true;
+    _wishlistDataModel.clear();
     update();
 
     Map<String, dynamic> queryParams = {
