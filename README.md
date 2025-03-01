@@ -12,5 +12,7 @@ we're following
 - State management tool: getx
 - API - Restfull Api integration
 - http - for restApi call
-- 
+- Payment gateway - Stripe card payment
+- Payment gateway - Cash on delivery
+
 ![Application ui](https://hudaenu.xyz/wp-content/uploads/2024/07/Flutter-application-1.webp)

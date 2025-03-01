@@ -8,6 +8,7 @@ import 'package:craftybay/features/product/widgets/size_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../cart/ui/screens/cart_screen.dart';
 import '../../../common/data/models/product_pagination_model/product_pagination_model.dart';
 import '../../../common/ui/controllers/auth_controller.dart';
 import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
@@ -193,8 +194,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void _onTapCartScreen(){
-    // Navigator.pushNamed(context, CartScreen.name);
-    Get.find<MainBottomNavController>().changeIndex(2);
+    Navigator.pushNamed(context, CartScreen.name);
+    // Get.find<MainBottomNavController>().changeIndex(2);
   }
 
   void _onPop(){

@@ -1,7 +1,9 @@
 import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
 import 'package:craftybay/features/cart/ui/controllers/cart_list_controller.dart';
+import 'package:craftybay/features/checkout/serivices/stripe_payment_gateway/stripe_payment_gateway.dart';
 import 'package:craftybay/features/checkout/ui/controllers/create_order_controller.dart';
+import 'package:craftybay/features/checkout/ui/screens/thank_you_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
@@ -19,9 +21,10 @@ class CheckoutScreen extends StatefulWidget {
   State<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
+enum RadioSelection { option1, option2, none }
+
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final TextEditingController _fullNameTEController = TextEditingController();
   final TextEditingController _shippingAddressTEController = TextEditingController();
   final TextEditingController _cityTEController = TextEditingController();
@@ -29,7 +32,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _mobileTEController = TextEditingController();
   final CreateOrderController _createOrderController = Get.find<CreateOrderController>();
   final CartListController _cartListController = Get.find<CartListController>();
+  final StripePaymentGateway _stripePayment = Get.find<StripePaymentGateway>();
   final AuthController _auth = Get.find<AuthController>();
+  RadioSelection _selectedRadio = RadioSelection.none;
 
   @override
   Widget build(BuildContext context) {
@@ -131,19 +136,51 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ),
                 const SizedBox(height: 24,),
-                GetBuilder<CreateOrderController>(
-                    builder: (controller) {
-                      if(controller.inProgress){
-                        return const CenteredCircularProgressIndicator();
-                      }
-                      return ElevatedButton(
-                        onPressed: (){
-                          _onTapCheckout();
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Column(
+                    children: [
+                      RadioListTile<RadioSelection>(
+                        title: const Text("Cash on delivery"),
+                        value: RadioSelection.option1,
+                        groupValue: _selectedRadio,
+                        onChanged: (RadioSelection? value) {
+                          setState(() {
+                            _selectedRadio = value!;
+                          });
                         },
-                        child: Text("Pay \$${_cartListController.totalPrice}"),
-                      );
-                    }
+                      ),
+                      RadioListTile<RadioSelection>(
+                        title: const Text('Cart payment'),
+                        value: RadioSelection.option2,
+                        groupValue: _selectedRadio,
+                        onChanged: (RadioSelection? value) {
+                          setState(() {
+                            _selectedRadio = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(height: 20.0), // Spacing between radio buttons and button
+                _buildButton(),
+                // GetBuilder<StripePaymentGateway>(
+                //     builder: (controller) {
+                //       if(controller.inProgress){
+                //         return const CenteredCircularProgressIndicator();
+                //       }
+                //       return ElevatedButton(
+                //         onPressed: (){
+                //           _onTapCheckout();
+                //         },
+                //         child: Text("Pay \$${_cartListController.totalPrice}"),
+                //       );
+                //     }
+                // ),
               ],
             ),
           ),
@@ -152,10 +189,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  void _onTapCheckout(){
+  void _onTapCODCheckout(){
     if(_formKey.currentState!.validate()){
       _createOrder();
     }
+  }
+
+  void _onTapStripeCheckout(){
+    if(_formKey.currentState!.validate()){
+      _payment();
+    }
+  }
+
+  void _payment(){
+    String amount = _cartListController.totalPrice.toString();
+    _stripePayment.makePayment(amount);
   }
 
   Future<void> _createOrder()async {
@@ -171,7 +219,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       );
       if(result && mounted){
         _clearUserInput();
-        showSnackBarMessage(context, "order Created Successfully");
+        Navigator.pushNamedAndRemoveUntil(context, ThankYouScreen.name, (predicate)=>false);
+        // showSnackBarMessage(context, "order Created Successfully");
       }else{
         if(mounted){
           showSnackBarMessage(context, _createOrderController.errorMessage ?? "Something went wrong, please try again", false);
@@ -190,6 +239,42 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _cityTEController.clear();
     _postCodeTEController.clear();
     _mobileTEController.clear();
+  }
+
+  Widget _buildButton() {
+    switch (_selectedRadio) {
+      case RadioSelection.option1:
+        return GetBuilder<CreateOrderController>(
+            builder: (controller) {
+              if(controller.inProgress){
+                return const CenteredCircularProgressIndicator();
+              }
+              return ElevatedButton(
+                onPressed: (){
+                  _onTapCODCheckout();
+                  },
+                child: Text("Pay \$${_cartListController.totalPrice}"),
+              );
+            }
+            );
+      case RadioSelection.option2:
+        return GetBuilder<StripePaymentGateway>(
+            builder: (controller) {
+              if(controller.inProgress){
+                return const CenteredCircularProgressIndicator();
+              }
+              return ElevatedButton(
+                onPressed: (){
+                  _onTapStripeCheckout();
+                  },
+                child: Text("Pay \$${_cartListController.totalPrice}"),
+              );
+            }
+            );
+      case RadioSelection.none:
+      default:
+        return Container();
+    }
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart'
 import 'package:craftybay/features/cart/ui/screens/cart_screen.dart';
 import 'package:craftybay/features/category/ui/screens/category_list_screen.dart';
 import 'package:craftybay/features/checkout/ui/screens/checkout_screen.dart';
+import 'package:craftybay/features/checkout/ui/screens/thank_you_screen.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/product/ui/screens/product_details_screen.dart';
 import 'package:craftybay/features/product/ui/screens/product_list_by_remarks_screen.dart';
@@ -65,6 +66,8 @@ class CraftyBay extends StatelessWidget {
           widget = const CartScreen();
         }else if(settings.name == CheckoutScreen.name){
           widget = const CheckoutScreen();
+        }else if(settings.name == ThankYouScreen.name){
+          widget = const ThankYouScreen();
         }
 
         return MaterialPageRoute(builder: (context){

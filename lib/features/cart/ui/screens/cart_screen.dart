@@ -3,6 +3,7 @@ import 'package:craftybay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:craftybay/features/cart/ui/widgets/cart_item_card_widget.dart';
 import 'package:craftybay/features/checkout/ui/screens/checkout_screen.dart';
 import 'package:craftybay/features/common/ui/controllers/auth_controller.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:craftybay/features/common/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_,__)=>_onPop,
+      onPopInvokedWithResult: (_,__)=>_onPop(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -127,6 +128,7 @@ class _CartScreenState extends State<CartScreen> {
 
   void _onPop(){
     Get.find<MainBottomNavController>().backToHome();
+    Get.offNamed(MainBottomNavScreen.name);
   }
 
   Future<void> getCartItemList()async {
