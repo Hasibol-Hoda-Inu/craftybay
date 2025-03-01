@@ -168,19 +168,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 const SizedBox(height: 20.0), // Spacing between radio buttons and button
                 _buildButton(),
-                // GetBuilder<StripePaymentGateway>(
-                //     builder: (controller) {
-                //       if(controller.inProgress){
-                //         return const CenteredCircularProgressIndicator();
-                //       }
-                //       return ElevatedButton(
-                //         onPressed: (){
-                //           _onTapCheckout();
-                //         },
-                //         child: Text("Pay \$${_cartListController.totalPrice}"),
-                //       );
-                //     }
-                // ),
               ],
             ),
           ),
