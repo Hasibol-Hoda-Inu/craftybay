@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import '../../../cart/ui/screens/cart_screen.dart';
 import '../../../common/data/models/product_pagination_model/product_pagination_model.dart';
 import '../../../common/ui/controllers/auth_controller.dart';
-import '../../../common/ui/controllers/main_bottom_nav_controller.dart';
 import '../../../common/ui/widgets/show_snackbar_message.dart';
 import '../../widgets/color_picker_widget.dart';
 import '../../widgets/review_section_widget.dart';
