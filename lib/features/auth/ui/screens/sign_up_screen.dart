@@ -2,6 +2,7 @@ import 'package:craftybay/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:craftybay/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/utils/regex_validators.dart';
+import 'package:craftybay/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:craftybay/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -32,130 +33,137 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: FocusScope.of(context).unfocus,
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const AppLogoWidget(),
-                const SizedBox(height: 24,),
-                Text("Sign up", style: Theme.of(context).textTheme.titleLarge ,),
-                Text("Get started with us with your details", style: Theme.of(context).textTheme.bodyLarge,),
-                const SizedBox(height: 8,),
-                buildAHanAccountMethod(context),
-                const SizedBox(height: 24,),
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      spacing: 24,
-                      children: [
-                        TextFormField(
-                          controller: _firstNameTEController,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
-                              return "Enter your first name";
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              hintText: 'First name'
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop,__){
+        if(didPop)return;
+        Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (predicate)=>false);
+        },
+      child: GestureDetector(
+        onTap: FocusScope.of(context).unfocus,
+        child: Scaffold(
+          appBar: AppBar(),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const AppLogoWidget(),
+                  const SizedBox(height: 24,),
+                  Text("Sign up", style: Theme.of(context).textTheme.titleLarge ,),
+                  Text("Get started with us with your details", style: Theme.of(context).textTheme.bodyLarge,),
+                  const SizedBox(height: 8,),
+                  buildAHanAccountMethod(context),
+                  const SizedBox(height: 24,),
+                  Form(
+                      key: _formKey,
+                      child: Column(
+                        spacing: 24,
+                        children: [
+                          TextFormField(
+                            controller: _firstNameTEController,
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return "Enter your first name";
+                              }
+                              return null;
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: const InputDecoration(
+                                hintText: 'First name'
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: _lastNameTEController,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
-                              return "Enter your last name";
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              hintText: 'Last name'
+                          TextFormField(
+                            controller: _lastNameTEController,
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return "Enter your last name";
+                              }
+                              return null;
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: const InputDecoration(
+                                hintText: 'Last name'
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: _emailTEController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
-                              return "Enter your email";
-                            }else if(!value.isValidEmail()){
-                              return "Enter a valid email";
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              hintText: 'Email'
+                          TextFormField(
+                            controller: _emailTEController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return "Enter your email";
+                              }else if(!value.isValidEmail()){
+                                return "Enter a valid email";
+                              }
+                              return null;
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: const InputDecoration(
+                                hintText: 'Email'
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: _passwordTEController,
-                          validator: (value){
-                            if((value == null || value.isEmpty) || value.length < 6){
-                              return "Enter a password min 6 characters";
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              hintText: 'Password'
+                          TextFormField(
+                            controller: _passwordTEController,
+                            validator: (value){
+                              if((value == null || value.isEmpty) || value.length < 6){
+                                return "Enter a password min 6 characters";
+                              }
+                              return null;
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: const InputDecoration(
+                                hintText: 'Password'
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: _mobileTEController,
-                          keyboardType: TextInputType.phone,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
-                              return "Enter your mobile number";
-                            }else if(!value.isValidBangladeshiMobile()){
-                              return "Enter a valid mobile number";
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              hintText: 'NO.'
+                          TextFormField(
+                            controller: _mobileTEController,
+                            keyboardType: TextInputType.phone,
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return "Enter your mobile number";
+                              }else if(!value.isValidBangladeshiMobile()){
+                                return "Enter a valid mobile number";
+                              }
+                              return null;
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: const InputDecoration(
+                                hintText: 'NO.'
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: _cityTEController,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
-                              return "Enter your city";
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              hintText: 'City'
+                          TextFormField(
+                            controller: _cityTEController,
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return "Enter your city";
+                              }
+                              return null;
+                            },
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: const InputDecoration(
+                                hintText: 'City'
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                ),
-                const SizedBox(height: 24,),
-                GetBuilder<SignUpController>(
-                  builder: (controller) {
-                    if(controller.inProgress){
-                      return const CenteredCircularProgressIndicator();
+                        ],
+                      ),
+                  ),
+                  const SizedBox(height: 24,),
+                  GetBuilder<SignUpController>(
+                    builder: (controller) {
+                      if(controller.inProgress){
+                        return const CenteredCircularProgressIndicator();
+                      }
+                      return ElevatedButton(
+                          onPressed: (){
+                            _onTapNextScreen();
+                          },
+                          child: const Text("Complete"),
+                      );
                     }
-                    return ElevatedButton(
-                        onPressed: (){
-                          _onTapNextScreen();
-                        },
-                        child: const Text("Complete"),
-                    );
-                  }
-                ),
-                const SizedBox(height: 24,),
-              ],
+                  ),
+                  const SizedBox(height: 24,),
+                ],
+              ),
             ),
           ),
         ),

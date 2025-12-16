@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/ui/controllers/auth_controller.dart';
+import '../../../common/ui/screens/main_bottom_nav_screen.dart';
 import '../../../product/ui/controller/add_to_cart_controller.dart';
 import 'sign_up_screen.dart';
 
@@ -32,69 +33,76 @@ class _SignInScreenState extends State<SignInScreen> {
 
 @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 120,),
-              const AppLogoWidget(),
-              const SizedBox(height: 36,),
-              Text("Sign in", style: Theme.of(context).textTheme.titleLarge ,),
-              Text("Please enter your email and password to sign in", style: Theme.of(context).textTheme.bodyLarge,),
-              const SizedBox(height: 24,),
-              Form(
-                key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: _emailTEController,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter your email";
-                          }else if(!value.isValidEmail()){
-                            return "Enter a valid email";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                          hintText: 'Email address'
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop,_){
+        if(didPop)return;
+        Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (predicate)=>false);
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 120,),
+                const AppLogoWidget(),
+                const SizedBox(height: 36,),
+                Text("Sign in", style: Theme.of(context).textTheme.titleLarge ,),
+                Text("Please enter your email and password to sign in", style: Theme.of(context).textTheme.bodyLarge,),
+                const SizedBox(height: 24,),
+                Form(
+                  key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _emailTEController,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter your email";
+                            }else if(!value.isValidEmail()){
+                              return "Enter a valid email";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                            hintText: 'Email address'
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10,),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return "Enter a your password";
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(
-                          hintText: 'Password'
+                        const SizedBox(height: 10,),
+                        TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Enter a your password";
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                            hintText: 'Password'
+                          ),
                         ),
-                      ),
-              ],)),
-              const SizedBox(height: 24,),
-              GetBuilder<SignInController>(
-                builder: (controller) {
-                  if(controller.inProgress){
-                   return const CenteredCircularProgressIndicator();
+                ],)),
+                const SizedBox(height: 24,),
+                GetBuilder<SignInController>(
+                  builder: (controller) {
+                    if(controller.inProgress){
+                     return const CenteredCircularProgressIndicator();
+                    }
+                    return ElevatedButton(
+                        onPressed: (){
+                          _onTapNavigateToOTPVerificationScreen();
+                        },
+                        child: const Text("Next"));
                   }
-                  return ElevatedButton(
-                      onPressed: (){
-                        _onTapNavigateToOTPVerificationScreen();
-                      },
-                      child: const Text("Next"));
-                }
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

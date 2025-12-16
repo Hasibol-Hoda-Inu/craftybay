@@ -38,11 +38,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_,__)=>_onPop,
+      onPopInvokedWithResult: (_,__)=> _onTap,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: _onPop,
+              onPressed: _onTap,
               icon: const Icon(Icons.arrow_back_ios)),
           title: const Text("Wishlist"),
           bottom: PreferredSize(
@@ -107,12 +107,17 @@ class _WishlistScreenState extends State<WishlistScreen> {
       }
     }else{
       if(mounted){
-        Navigator.pushNamed(context, SignUpScreen.name);
+        _onTapSignUp();
       }
     }
   }
 
-  void _onPop(){
+  void _onTapSignUp(){
+    // Get.offAllNamed(SignUpScreen.name);
+    Navigator.pushReplacementNamed(context, SignUpScreen.name,);
+  }
+
+  void _onTap(){
     Get.find<MainBottomNavController>().backToHome();
   }
 }

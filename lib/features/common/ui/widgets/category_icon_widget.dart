@@ -31,7 +31,10 @@ class CategoryIconWidget extends StatelessWidget {
                 color: AppColors.themeColor.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6)
             ),
-            child: Image.network(categoryModel.icon ?? "",width: 40, height: 40, fit: BoxFit.scaleDown,),
+            child: Image.network(categoryModel.icon ?? " ",
+            width: 40, height: 40, fit: BoxFit.scaleDown,
+            errorBuilder: (context, error, stackTrace)=> const Icon(Icons.category, size: 35, color: AppColors.themeColor,),
+            ),
           ),
           Text(categoryModel.title ?? "",
             textAlign: TextAlign.center,

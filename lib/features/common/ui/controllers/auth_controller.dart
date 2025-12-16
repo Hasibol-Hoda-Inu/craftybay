@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../auth/data/models/sign_in_model.dart';
@@ -25,7 +26,7 @@ class AuthController {
       profileModel = User.fromJson(jsonDecode(profileJson));
     } else {
       // Handle missing profile data (e.g., log error)
-      print("Profile data not found in SharedPreferences");
+      debugPrint("Profile data not found in SharedPreferences");
     }
     // profileModel = User.fromJson(jsonDecode(sharedPreferences.getString(_profileDataKey)!));
   }

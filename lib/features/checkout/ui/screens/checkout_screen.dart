@@ -259,8 +259,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             }
             );
       case RadioSelection.none:
-      default:
-        return Container();
+      return Container();
     }
   }
 
